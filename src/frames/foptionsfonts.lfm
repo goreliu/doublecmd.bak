@@ -1,0 +1,18 @@
+inherited frmOptionsFonts: TfrmOptionsFonts
+  Height = 372
+  Hint = 'Fonts'
+  Width = 601
+  ChildSizing.LeftRightSpacing = 6
+  ChildSizing.TopBottomSpacing = 6
+  ChildSizing.HorizontalSpacing = 3
+  ChildSizing.VerticalSpacing = 2
+  DesignLeft = 804
+  DesignTop = 355
+  object dlgFnt: TFontDialog[0]
+    MinFontSize = 0
+    MaxFontSize = 0
+    Options = []
+    left = 80
+    top = 40
+  end
+end

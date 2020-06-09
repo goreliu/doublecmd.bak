@@ -1,0 +1,1029 @@
+object frmMultiRename: TfrmMultiRename
+  Left = 492
+  Height = 466
+  Top = 132
+  Width = 804
+  ActiveControl = edName
+  Caption = 'Multi-Rename Tool'
+  ClientHeight = 446
+  ClientWidth = 804
+  KeyPreview = True
+  Menu = mmMainMenu
+  OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  SessionProperties = 'Height;Left;Top;Width;WindowState;pnlOptionsLeft.Width'
+  ShowHint = True
+  ShowInTaskBar = stAlways
+  LCLVersion = '2.0.6.0'
+  object StringGrid: TStringGrid
+    Left = 6
+    Height = 217
+    Top = 6
+    Width = 792
+    Align = alClient
+    AutoFillColumns = True
+    BorderSpacing.Left = 6
+    BorderSpacing.Top = 6
+    BorderSpacing.Right = 6
+    ColCount = 3
+    Columns = <    
+      item
+        SizePriority = 0
+        Title.Caption = 'Old File Name'
+        Width = 248
+      end    
+      item
+        SizePriority = 0
+        Title.Caption = 'New File Name'
+        Width = 249
+      end    
+      item
+        Title.Caption = 'File Path'
+        Width = 291
+      end>
+    ExtendedSelect = False
+    FixedCols = 0
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
+    ParentFont = False
+    RowCount = 1
+    TabOrder = 1
+    TitleStyle = tsNative
+    OnKeyDown = StringGridKeyDown
+    OnMouseDown = StringGridMouseDown
+    OnMouseUp = StringGridMouseUp
+    OnResize = StringGridTopLeftChanged
+    OnSelection = StringGridSelection
+    OnTopLeftChanged = StringGridTopLeftChanged
+    ColWidths = (
+      248
+      249
+      291
+    )
+  end
+  object pnlOptions: TPanel
+    Left = 6
+    Height = 211
+    Top = 229
+    Width = 792
+    Align = alBottom
+    AutoSize = True
+    BorderSpacing.Around = 6
+    BevelOuter = bvNone
+    ClientHeight = 211
+    ClientWidth = 792
+    ParentFont = False
+    TabOrder = 0
+    object pnlOptionsLeft: TPanel
+      AnchorSideRight.Side = asrBottom
+      Left = 0
+      Height = 211
+      Top = 0
+      Width = 295
+      Align = alLeft
+      BevelOuter = bvNone
+      ClientHeight = 211
+      ClientWidth = 295
+      ParentFont = False
+      TabOrder = 0
+      object gbMaska: TGroupBox
+        AnchorSideLeft.Control = pnlOptionsLeft
+        AnchorSideTop.Control = pnlOptionsLeft
+        AnchorSideRight.Control = pnlOptionsLeft
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = gbPresets
+        Left = 0
+        Height = 158
+        Top = 0
+        Width = 295
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = True
+        Caption = 'Mask'
+        ChildSizing.LeftRightSpacing = 4
+        ChildSizing.HorizontalSpacing = 2
+        ChildSizing.VerticalSpacing = 2
+        ClientHeight = 138
+        ClientWidth = 291
+        ParentFont = False
+        TabOrder = 0
+        object lbName: TLabel
+          AnchorSideLeft.Control = gbMaska
+          AnchorSideTop.Control = gbMaska
+          AnchorSideBottom.Control = edName
+          Left = 4
+          Height = 15
+          Top = 0
+          Width = 53
+          Caption = 'File &Name'
+          FocusControl = edName
+          ParentColor = False
+          ParentFont = False
+        end
+        object lbExt: TLabel
+          AnchorSideLeft.Control = gbMaska
+          AnchorSideTop.Control = cbNameMaskStyle
+          AnchorSideTop.Side = asrBottom
+          Left = 4
+          Height = 15
+          Top = 69
+          Width = 51
+          Caption = '&Extension'
+          FocusControl = edExt
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbNameMaskStyle: TComboBox
+          AnchorSideLeft.Control = btnAnyNameMask
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edName
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbMaska
+          AnchorSideRight.Side = asrBottom
+          Left = 29
+          Height = 23
+          Top = 42
+          Width = 258
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Bottom = 4
+          ItemHeight = 15
+          OnChange = cbNameStyleChange
+          ParentFont = False
+          Style = csDropDownList
+          TabOrder = 2
+        end
+        object cmbExtensionStyle: TComboBox
+          AnchorSideLeft.Control = btnAnyExtMask
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edExt
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbMaska
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 29
+          Height = 23
+          Top = 111
+          Width = 258
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Bottom = 4
+          ItemHeight = 15
+          OnChange = cbNameStyleChange
+          ParentFont = False
+          Style = csDropDownList
+          TabOrder = 5
+        end
+        object btnAnyNameMask: TBitBtn
+          AnchorSideLeft.Control = gbMaska
+          AnchorSideTop.Control = cbNameMaskStyle
+          AnchorSideBottom.Control = cbNameMaskStyle
+          AnchorSideBottom.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 42
+          Width = 23
+          Anchors = [akTop, akLeft, akBottom]
+          ParentBidiMode = False
+          ParentFont = False
+          Spacing = 0
+          TabOrder = 1
+        end
+        object btnAnyExtMask: TBitBtn
+          AnchorSideLeft.Control = gbMaska
+          AnchorSideTop.Control = cmbExtensionStyle
+          AnchorSideBottom.Control = cmbExtensionStyle
+          AnchorSideBottom.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 111
+          Width = 23
+          Anchors = [akTop, akLeft, akBottom]
+          ParentBidiMode = False
+          ParentFont = False
+          Spacing = 0
+          TabOrder = 4
+        end
+        object edName: TEdit
+          AnchorSideLeft.Control = gbMaska
+          AnchorSideTop.Control = lbName
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbMaska
+          AnchorSideRight.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 17
+          Width = 283
+          Anchors = [akTop, akLeft, akRight]
+          AutoSelect = False
+          OnChange = cbNameStyleChange
+          ParentFont = False
+          TabOrder = 0
+        end
+        object edExt: TEdit
+          AnchorSideLeft.Control = gbMaska
+          AnchorSideTop.Control = lbExt
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbMaska
+          AnchorSideRight.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 86
+          Width = 283
+          Anchors = [akTop, akLeft, akRight]
+          AutoSelect = False
+          OnChange = cbNameStyleChange
+          ParentFont = False
+          TabOrder = 3
+        end
+      end
+      object gbPresets: TGroupBox
+        AnchorSideLeft.Control = pnlOptionsLeft
+        AnchorSideRight.Control = pnlOptionsLeft
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = pnlOptionsLeft
+        AnchorSideBottom.Side = asrBottom
+        Left = 0
+        Height = 47
+        Top = 164
+        Width = 295
+        Anchors = [akLeft, akRight, akBottom]
+        AutoSize = True
+        BorderSpacing.Top = 6
+        Caption = 'Presets'
+        ChildSizing.LeftRightSpacing = 4
+        ChildSizing.HorizontalSpacing = 2
+        ChildSizing.VerticalSpacing = 2
+        ClientHeight = 27
+        ClientWidth = 291
+        ParentFont = False
+        TabOrder = 1
+        object cbPresets: TComboBox
+          AnchorSideLeft.Control = gbPresets
+          AnchorSideRight.Control = btnPresets
+          AnchorSideBottom.Control = gbPresets
+          AnchorSideBottom.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 0
+          Width = 258
+          Anchors = [akLeft, akRight, akBottom]
+          BorderSpacing.Bottom = 4
+          DropDownCount = 15
+          ItemHeight = 15
+          OnChange = cbPresetsChange
+          OnCloseUp = cbPresetsCloseUp
+          ParentFont = False
+          Style = csDropDownList
+          TabOrder = 1
+        end
+        object btnPresets: TBitBtn
+          AnchorSideTop.Control = cbPresets
+          AnchorSideRight.Control = gbPresets
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = cbPresets
+          AnchorSideBottom.Side = asrBottom
+          Left = 264
+          Height = 23
+          Top = 0
+          Width = 23
+          Anchors = [akTop, akRight, akBottom]
+          OnClick = actExecute
+          ParentBidiMode = False
+          ParentFont = False
+          Spacing = 0
+          TabOrder = 0
+        end
+      end
+    end
+    object spltMainSplitter: TSplitter
+      Left = 295
+      Height = 211
+      Top = 0
+      Width = 5
+    end
+    object pnlOptionsRight: TPanel
+      Left = 300
+      Height = 211
+      Top = 0
+      Width = 492
+      Align = alClient
+      AutoSize = True
+      BevelOuter = bvNone
+      ChildSizing.LeftRightSpacing = 4
+      ChildSizing.HorizontalSpacing = 2
+      ChildSizing.VerticalSpacing = 2
+      ClientHeight = 211
+      ClientWidth = 492
+      ParentFont = False
+      TabOrder = 2
+      object gbFindReplace: TGroupBox
+        AnchorSideLeft.Control = pnlOptionsRight
+        AnchorSideTop.Control = pnlOptionsRight
+        AnchorSideRight.Control = gbCounter
+        AnchorSideBottom.Control = btnClose
+        Left = 4
+        Height = 157
+        Top = 0
+        Width = 295
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = True
+        BorderSpacing.Right = 4
+        Caption = 'Find && Replace'
+        ChildSizing.LeftRightSpacing = 4
+        ChildSizing.HorizontalSpacing = 2
+        ChildSizing.VerticalSpacing = 2
+        ClientHeight = 137
+        ClientWidth = 291
+        ParentFont = False
+        TabOrder = 0
+        object lbFind: TLabel
+          AnchorSideLeft.Control = gbFindReplace
+          AnchorSideTop.Control = gbFindReplace
+          Left = 4
+          Height = 15
+          Top = 0
+          Width = 32
+          Caption = '&Find...'
+          FocusControl = edFind
+          ParentColor = False
+          ParentFont = False
+        end
+        object lbReplace: TLabel
+          AnchorSideLeft.Control = gbFindReplace
+          AnchorSideTop.Control = edFind
+          AnchorSideTop.Side = asrBottom
+          Left = 4
+          Height = 15
+          Top = 44
+          Width = 50
+          BorderSpacing.Top = 4
+          Caption = 'Re&place...'
+          FocusControl = edReplace
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbRegExp: TCheckBox
+          AnchorSideLeft.Control = gbFindReplace
+          AnchorSideTop.Control = edReplace
+          AnchorSideTop.Side = asrBottom
+          Left = 4
+          Height = 19
+          Top = 88
+          Width = 124
+          BorderSpacing.Top = 4
+          Caption = 'Regular e&xpressions'
+          OnChange = cbRegExpChange
+          ParentFont = False
+          TabOrder = 2
+        end
+        object cbUseSubs: TCheckBox
+          AnchorSideLeft.Control = gbFindReplace
+          AnchorSideTop.Control = cbRegExp
+          AnchorSideTop.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 4
+          Height = 19
+          Top = 109
+          Width = 105
+          BorderSpacing.Top = 2
+          Caption = '&Use substitution'
+          Enabled = False
+          OnChange = cbNameStyleChange
+          ParentFont = False
+          TabOrder = 3
+        end
+        object edFind: TEdit
+          AnchorSideLeft.Control = gbFindReplace
+          AnchorSideTop.Control = lbFind
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbFindReplace
+          AnchorSideRight.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 17
+          Width = 283
+          Anchors = [akTop, akLeft, akRight]
+          AutoSelect = False
+          OnChange = edFindChange
+          ParentFont = False
+          TabOrder = 0
+        end
+        object edReplace: TEdit
+          AnchorSideLeft.Control = gbFindReplace
+          AnchorSideTop.Control = lbReplace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = gbFindReplace
+          AnchorSideRight.Side = asrBottom
+          Left = 4
+          Height = 23
+          Top = 61
+          Width = 283
+          Anchors = [akTop, akLeft, akRight]
+          AutoSelect = False
+          OnChange = edReplaceChange
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+      object gbCounter: TGroupBox
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = pnlOptionsRight
+        AnchorSideRight.Control = pnlOptionsRight
+        AnchorSideRight.Side = asrBottom
+        Left = 303
+        Height = 97
+        Top = 0
+        Width = 185
+        Anchors = [akTop, akRight]
+        AutoSize = True
+        Caption = 'Counter'
+        ChildSizing.LeftRightSpacing = 4
+        ChildSizing.HorizontalSpacing = 2
+        ChildSizing.VerticalSpacing = 2
+        ChildSizing.EnlargeHorizontal = crsScaleChilds
+        ChildSizing.EnlargeVertical = crsScaleChilds
+        ChildSizing.ShrinkHorizontal = crsScaleChilds
+        ChildSizing.ShrinkVertical = crsScaleChilds
+        ChildSizing.Layout = cclLeftToRightThenTopToBottom
+        ChildSizing.ControlsPerLine = 2
+        ClientHeight = 77
+        ClientWidth = 181
+        ParentFont = False
+        TabOrder = 1
+        object lbStNb: TLabel
+          Left = 4
+          Height = 15
+          Top = 4
+          Width = 71
+          BorderSpacing.CellAlignVertical = ccaCenter
+          Caption = 'S&tart Number'
+          FocusControl = edPoc
+          ParentColor = False
+          ParentFont = False
+        end
+        object edPoc: TEdit
+          Left = 77
+          Height = 23
+          Top = 0
+          Width = 100
+          AutoSelect = False
+          MaxLength = 10
+          OnChange = edPocChange
+          ParentFont = False
+          TabOrder = 0
+          Text = '1'
+        end
+        object lbInterval: TLabel
+          Left = 4
+          Height = 15
+          Top = 29
+          Width = 71
+          BorderSpacing.CellAlignVertical = ccaCenter
+          Caption = '&Interval'
+          FocusControl = edInterval
+          ParentColor = False
+          ParentFont = False
+        end
+        object edInterval: TEdit
+          Left = 77
+          Height = 23
+          Top = 25
+          Width = 100
+          AutoSelect = False
+          MaxLength = 10
+          OnChange = edIntervalChange
+          ParentFont = False
+          TabOrder = 1
+          Text = '1'
+        end
+        object lbWidth: TLabel
+          Left = 4
+          Height = 15
+          Top = 54
+          Width = 71
+          BorderSpacing.CellAlignVertical = ccaCenter
+          Caption = '&Width'
+          FocusControl = cmbxWidth
+          ParentColor = False
+          ParentFont = False
+        end
+        object cmbxWidth: TComboBox
+          Left = 77
+          Height = 23
+          Top = 50
+          Width = 100
+          BorderSpacing.Bottom = 4
+          ItemHeight = 15
+          ItemIndex = 0
+          Items.Strings = (
+            '01'
+            '02'
+            '03'
+            '04'
+            '05'
+            '06'
+            '07'
+            '08'
+            '09'
+            '10'
+          )
+          OnChange = cbNameStyleChange
+          ParentFont = False
+          Style = csDropDownList
+          TabOrder = 2
+          Text = '01'
+        end
+      end
+      object btnRestore: TBitBtn
+        AnchorSideLeft.Control = gbCounter
+        AnchorSideTop.Control = gbCounter
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = pnlOptionsRight
+        AnchorSideRight.Side = asrBottom
+        Left = 303
+        Height = 25
+        Top = 99
+        Width = 185
+        Action = actResetAll
+        Anchors = [akTop, akLeft, akRight]
+        AutoSize = True
+        Constraints.MinWidth = 100
+        ParentFont = False
+        TabOrder = 2
+      end
+      object cbLog: TCheckBox
+        AnchorSideLeft.Control = pnlOptionsRight
+        AnchorSideTop.Side = asrCenter
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        Left = 10
+        Height = 19
+        Top = 165
+        Width = 72
+        Anchors = [akLeft, akBottom]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 2
+        Caption = '&Log result'
+        OnClick = cbLogClick
+        ParentFont = False
+        TabOrder = 7
+      end
+      object btnRelativeRenameLogFile: TSpeedButton
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Control = fneRenameLogFileFilename
+        AnchorSideRight.Control = btnViewRenameLogFile
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        AnchorSideBottom.Side = asrBottom
+        Left = 440
+        Height = 23
+        Top = 186
+        Width = 23
+        Anchors = [akTop, akRight, akBottom]
+        ParentFont = False
+      end
+      object btnViewRenameLogFile: TSpeedButton
+        AnchorSideTop.Control = fneRenameLogFileFilename
+        AnchorSideRight.Control = pnlOptionsRight
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        AnchorSideBottom.Side = asrBottom
+        Left = 465
+        Height = 23
+        Top = 186
+        Width = 23
+        Anchors = [akTop, akRight, akBottom]
+        ParentFont = False
+      end
+      object fneRenameLogFileFilename: TFileNameEdit
+        AnchorSideLeft.Control = pnlOptionsRight
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = btnRelativeRenameLogFile
+        AnchorSideBottom.Control = pnlOptionsRight
+        AnchorSideBottom.Side = asrBottom
+        Left = 10
+        Height = 23
+        Top = 186
+        Width = 428
+        DialogTitle = 'Select target log filename'
+        DialogOptions = []
+        FilterIndex = 0
+        HideDirectories = False
+        ButtonWidth = 23
+        NumGlyphs = 1
+        Anchors = [akLeft, akRight]
+        BorderSpacing.Left = 10
+        MaxLength = 0
+        ParentFont = False
+        TabOrder = 8
+        OnChange = cbNameStyleChange
+      end
+      object btnRename: TBitBtn
+        AnchorSideLeft.Control = gbCounter
+        AnchorSideTop.Control = btnRestore
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = pnlOptionsRight
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = btnClose
+        Left = 303
+        Height = 31
+        Top = 126
+        Width = 185
+        Action = actRename
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        BorderSpacing.InnerBorder = 2
+        Default = True
+        ParentFont = False
+        TabOrder = 3
+      end
+      object btnClose: TBitBtn
+        AnchorSideRight.Control = pnlOptionsRight
+        AnchorSideRight.Side = asrBottom
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        Left = 408
+        Height = 25
+        Top = 159
+        Width = 80
+        Action = actClose
+        Anchors = [akRight, akBottom]
+        AutoSize = True
+        Constraints.MinWidth = 80
+        ParentFont = False
+        TabOrder = 6
+      end
+      object btnEditor: TBitBtn
+        AnchorSideRight.Control = btnClose
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        Left = 326
+        Height = 25
+        Top = 159
+        Width = 80
+        Action = actInvokeEditor
+        Anchors = [akRight, akBottom]
+        AutoSize = True
+        Constraints.MinWidth = 80
+        ParentFont = False
+        TabOrder = 5
+      end
+      object btnConfig: TBitBtn
+        AnchorSideRight.Control = btnEditor
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        Left = 224
+        Height = 25
+        Top = 159
+        Width = 100
+        Action = actConfig
+        Anchors = [akRight, akBottom]
+        AutoSize = True
+        Constraints.MinWidth = 80
+        ParentFont = False
+        TabOrder = 4
+      end
+      object cbLogAppend: TCheckBox
+        AnchorSideLeft.Control = cbLog
+        AnchorSideLeft.Side = asrBottom
+        AnchorSideTop.Side = asrCenter
+        AnchorSideBottom.Control = fneRenameLogFileFilename
+        Left = 92
+        Height = 19
+        Top = 165
+        Width = 62
+        Anchors = [akLeft, akBottom]
+        BorderSpacing.Left = 10
+        BorderSpacing.Top = 2
+        Caption = 'Append'
+        OnClick = cbLogClick
+        ParentFont = False
+        TabOrder = 9
+      end
+    end
+  end
+  object pmEditDirect: TPopupMenu
+    Images = dmComData.ilEditorImages
+    left = 504
+    top = 160
+    object mnuLoadFromFile: TMenuItem
+      Action = actLoadNamesFromFile
+    end
+    object mnuEditNames: TMenuItem
+      Action = actEditNames
+    end
+    object mnuEditNewNames: TMenuItem
+      Action = actEditNewNames
+    end
+  end
+  object mmMainMenu: TMainMenu
+    Images = dmComData.ilEditorImages
+    left = 96
+    top = 40
+    object miActions: TMenuItem
+      Caption = 'Actions'
+      object miResetAll: TMenuItem
+        Action = actResetAll
+      end
+      object miEditor: TMenuItem
+        Caption = 'Editor'
+        object miLoadNamesFromFile: TMenuItem
+          Action = actLoadNamesFromFile
+        end
+        object miEditNames: TMenuItem
+          Action = actEditNames
+        end
+        object miEditNewNames: TMenuItem
+          Action = actEditNewNames
+        end
+      end
+      object miSeparator1: TMenuItem
+        Caption = '-'
+      end
+      object miConfiguration: TMenuItem
+        Action = actConfig
+      end
+      object miSeparator2: TMenuItem
+        Caption = '-'
+      end
+      object miRename: TMenuItem
+        Action = actRename
+      end
+      object miClose: TMenuItem
+        Action = actClose
+      end
+    end
+  end
+  object actList: TActionList
+    Images = dmComData.ilEditorImages
+    left = 360
+    top = 96
+    object actAnyNameMask: TAction
+      Tag = 63
+      Category = 'Masks'
+      Caption = 'Filename'
+      ImageIndex = 20
+      OnExecute = actExecute
+    end
+    object actNameNameMask: TAction
+      Tag = 1
+      Category = 'Masks'
+      Caption = 'Filename'
+      ImageIndex = 20
+      OnExecute = actExecute
+    end
+    object actExtNameMask: TAction
+      Tag = 2
+      Category = 'Masks'
+      Caption = 'Extension'
+      ImageIndex = 21
+      OnExecute = actExecute
+    end
+    object actCtrNameMask: TAction
+      Tag = 4
+      Category = 'Masks'
+      Caption = 'Counter'
+      ImageIndex = 22
+      OnExecute = actExecute
+    end
+    object actDateNameMask: TAction
+      Tag = 8
+      Category = 'Masks'
+      Caption = 'Date'
+      ImageIndex = 23
+      OnExecute = actExecute
+    end
+    object actTimeNameMask: TAction
+      Tag = 16
+      Category = 'Masks'
+      Caption = 'Time'
+      ImageIndex = 24
+      OnExecute = actExecute
+    end
+    object actPlgnNameMask: TAction
+      Tag = 32
+      Category = 'Masks'
+      Caption = 'Plugins'
+      ImageIndex = 25
+      OnExecute = actExecute
+    end
+    object actResetAll: TAction
+      Category = 'Generic'
+      Caption = 'Reset &All'
+      ImageIndex = 17
+      OnExecute = actExecute
+    end
+    object actClearNameMask: TAction
+      Category = 'Masks'
+      Caption = 'Clear'
+      ImageIndex = 29
+      OnExecute = actExecute
+    end
+    object actAnyExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Extension'
+      ImageIndex = 21
+      OnExecute = actExecute
+    end
+    object actNameExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Filename'
+      ImageIndex = 20
+      OnExecute = actExecute
+    end
+    object actExtExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Extension'
+      ImageIndex = 21
+      OnExecute = actExecute
+    end
+    object actCtrExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Counter'
+      ImageIndex = 22
+      OnExecute = actExecute
+    end
+    object actDateExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Date'
+      ImageIndex = 23
+      OnExecute = actExecute
+    end
+    object actTimeExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Time'
+      ImageIndex = 24
+      OnExecute = actExecute
+    end
+    object actPlgnExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Plugins'
+      ImageIndex = 25
+      OnExecute = actExecute
+    end
+    object actClearExtMask: TAction
+      Category = 'Masks'
+      Caption = 'Clear'
+      ImageIndex = 29
+      OnExecute = actExecute
+    end
+    object actInvokeEditor: TAction
+      Category = 'Generic'
+      Caption = 'Edit&or'
+      ImageIndex = 19
+      OnExecute = actExecute
+    end
+    object actViewRenameLogFile: TAction
+      Category = 'Log'
+      Caption = 'View Rename Log File'
+      ImageIndex = 26
+      OnExecute = actExecute
+    end
+    object actInvokeRelativePath: TAction
+      Category = 'Log'
+      Caption = 'Invoke Relative Path Menu'
+      ImageIndex = 27
+      OnExecute = actInvokeRelativePathExecute
+    end
+    object actLoadNamesFromFile: TAction
+      Category = 'Generic'
+      Caption = 'Load Names from File...'
+      OnExecute = actExecute
+    end
+    object actEditNames: TAction
+      Category = 'Generic'
+      Caption = 'Edit Names...'
+      OnExecute = actExecute
+    end
+    object actEditNewNames: TAction
+      Category = 'Generic'
+      Caption = 'Edit Current New Names...'
+      OnExecute = actExecute
+    end
+    object actShowPresetsMenu: TAction
+      Category = 'Presets'
+      Caption = 'Show Preset Menu'
+      ImageIndex = 30
+      OnExecute = actExecute
+    end
+    object actDropDownPresetList: TAction
+      Category = 'Presets'
+      Caption = 'Drop Down Presets List'
+      ImageIndex = 33
+      OnExecute = actExecute
+    end
+    object actLoadLastPreset: TAction
+      Category = 'Presets'
+      Caption = 'Load Last Preset'
+      OnExecute = actExecute
+    end
+    object actLoadPreset: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset by Name or Index'
+      OnExecute = actExecute
+    end
+    object actLoadPreset1: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 1'
+      OnExecute = actExecute
+    end
+    object actLoadPreset2: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 2'
+      OnExecute = actExecute
+    end
+    object actLoadPreset3: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 3'
+      OnExecute = actExecute
+    end
+    object actLoadPreset4: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 4'
+      OnExecute = actExecute
+    end
+    object actLoadPreset5: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 5'
+      OnExecute = actExecute
+    end
+    object actLoadPreset6: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 6'
+      OnExecute = actExecute
+    end
+    object actLoadPreset7: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 7'
+      OnExecute = actExecute
+    end
+    object actLoadPreset8: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 8'
+      OnExecute = actExecute
+    end
+    object actLoadPreset9: TAction
+      Category = 'Presets'
+      Caption = 'Load Preset 9'
+      OnExecute = actExecute
+    end
+    object actSavePreset: TAction
+      Category = 'Presets'
+      Caption = 'Save'
+      ImageIndex = 31
+      OnExecute = actExecute
+    end
+    object actSavePresetAs: TAction
+      Category = 'Presets'
+      Caption = 'Save As...'
+      OnExecute = actExecute
+    end
+    object actRenamePreset: TAction
+      Category = 'Presets'
+      Caption = 'Rename'
+      OnExecute = actExecute
+    end
+    object actDeletePreset: TAction
+      Category = 'Presets'
+      Caption = 'Delete'
+      ImageIndex = 32
+      OnExecute = actExecute
+    end
+    object actSortPresets: TAction
+      Category = 'Presets'
+      Caption = 'Sort'
+      OnExecute = actExecute
+    end
+    object actConfig: TAction
+      Category = 'Generic'
+      Caption = 'Confi&guration'
+      ImageIndex = 18
+      OnExecute = actExecute
+    end
+    object actRename: TAction
+      Category = 'Generic'
+      Caption = '&Rename'
+      ImageIndex = 28
+      OnExecute = actExecute
+    end
+    object actClose: TAction
+      Category = 'Generic'
+      Caption = '&Close'
+      ImageIndex = 12
+      OnExecute = actExecute
+    end
+  end
+  object pmDynamicMasks: TPopupMenu
+    Images = dmComData.ilEditorImages
+    left = 96
+    top = 152
+  end
+  object pmPresets: TPopupMenu
+    Images = dmComData.ilEditorImages
+    left = 120
+    top = 376
+  end
+  object pmFloatingMainMaskMenu: TPopupMenu
+    Images = dmComData.ilEditorImages
+    left = 96
+    top = 96
+  end
+  object pmPathToBeRelativeToHelper: TPopupMenu
+    left = 648
+    top = 160
+  end
+end

@@ -1,0 +1,294 @@
+inherited frmOptionsFileAssocExtra: TfrmOptionsFileAssocExtra
+  Height = 508
+  Width = 937
+  AutoSize = True
+  BorderSpacing.Around = 6
+  ChildSizing.LeftRightSpacing = 6
+  ChildSizing.TopBottomSpacing = 6
+  ClientHeight = 508
+  ClientWidth = 937
+  ParentShowHint = False
+  ShowHint = True
+  DesignLeft = 141
+  DesignTop = 288
+  object cbOfferToAddToFileAssociations: TCheckBox[0]
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    Left = 6
+    Height = 19
+    Hint = 'When accessing file association, offer to add current selected file if not already included in a configured file type'
+    Top = 6
+    Width = 372
+    Caption = 'Offer to add selection to file association when not included already'
+    TabOrder = 0
+  end
+  object gbExtendedContextMenuOptions: TGroupBox[1]
+    AnchorSideLeft.Control = cbOfferToAddToFileAssociations
+    AnchorSideTop.Control = cbExtendedContextMenu
+    AnchorSideTop.Side = asrBottom
+    Left = 6
+    Height = 124
+    Top = 58
+    Width = 222
+    AutoSize = True
+    BorderSpacing.Top = 4
+    Caption = 'Extended options items:'
+    ChildSizing.LeftRightSpacing = 8
+    ChildSizing.TopBottomSpacing = 8
+    ClientHeight = 104
+    ClientWidth = 218
+    TabOrder = 1
+    object cbExecuteViaShell: TCheckBox
+      AnchorSideLeft.Control = gbExtendedContextMenuOptions
+      AnchorSideTop.Control = gbExtendedContextMenuOptions
+      Left = 8
+      Height = 19
+      Top = 8
+      Width = 105
+      BorderSpacing.Top = 4
+      Caption = 'Execute via shell'
+      TabOrder = 0
+    end
+    object cbOpenSystemWithTerminalClose: TCheckBox
+      AnchorSideLeft.Control = cbExecuteViaShell
+      AnchorSideTop.Control = cbExecuteViaShell
+      AnchorSideTop.Side = asrBottom
+      Left = 8
+      Height = 19
+      Top = 31
+      Width = 178
+      BorderSpacing.Top = 4
+      Caption = 'Execute via terminal and close'
+      TabOrder = 1
+    end
+    object cbOpenSystemWithTerminalStayOpen: TCheckBox
+      AnchorSideLeft.Control = cbExecuteViaShell
+      AnchorSideTop.Control = cbOpenSystemWithTerminalClose
+      AnchorSideTop.Side = asrBottom
+      Left = 8
+      Height = 19
+      Top = 54
+      Width = 202
+      BorderSpacing.Top = 4
+      Caption = 'Execute via terminal and stay open'
+      TabOrder = 2
+    end
+    object cbIncludeConfigFileAssoc: TCheckBox
+      AnchorSideLeft.Control = cbExecuteViaShell
+      AnchorSideTop.Control = cbOpenSystemWithTerminalStayOpen
+      AnchorSideTop.Side = asrBottom
+      Left = 8
+      Height = 19
+      Top = 77
+      Width = 175
+      BorderSpacing.Top = 4
+      Caption = 'File association configuration'
+      TabOrder = 3
+    end
+  end
+  object cbExtendedContextMenu: TCheckBox[2]
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = cbOfferToAddToFileAssociations
+    AnchorSideTop.Side = asrBottom
+    Left = 6
+    Height = 19
+    Top = 35
+    Width = 144
+    BorderSpacing.Top = 10
+    Caption = 'Extended context menu'
+    OnChange = cbExtendedContextMenuChange
+    TabOrder = 2
+  end
+  object gbToolbarOptionsExtra: TGroupBox[3]
+    AnchorSideLeft.Control = cbOfferToAddToFileAssociations
+    AnchorSideTop.Control = gbExtendedContextMenuOptions
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 6
+    Height = 161
+    Top = 182
+    Width = 925
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = True
+    Caption = 'Paths'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.TopBottomSpacing = 6
+    ChildSizing.HorizontalSpacing = 2
+    ChildSizing.VerticalSpacing = 6
+    ClientHeight = 141
+    ClientWidth = 921
+    TabOrder = 3
+    object lbFileAssocFilenameStyle: TLabel
+      AnchorSideLeft.Control = gbToolbarOptionsExtra
+      AnchorSideTop.Control = gbToolbarOptionsExtra
+      Left = 6
+      Height = 15
+      Top = 6
+      Width = 426
+      Caption = 'Way to set paths when adding elements for icons, commands and starting paths:'
+      ParentColor = False
+    end
+    object cbFileAssocFilenameStyle: TComboBox
+      AnchorSideLeft.Control = lbFileAssocFilenameStyle
+      AnchorSideTop.Control = lbFileAssocFilenameStyle
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = gbToolbarOptionsExtra
+      AnchorSideRight.Side = asrBottom
+      Left = 6
+      Height = 23
+      Top = 27
+      Width = 909
+      Anchors = [akTop, akLeft, akRight]
+      ItemHeight = 15
+      OnChange = cbFileAssocFilenameStyleChange
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object btnPathToBeRelativeToHelper: TSpeedButton
+      AnchorSideTop.Control = dePathToBeRelativeTo
+      AnchorSideRight.Control = cbFileAssocFilenameStyle
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = dePathToBeRelativeTo
+      AnchorSideBottom.Side = asrBottom
+      Left = 892
+      Height = 23
+      Top = 56
+      Width = 23
+      Anchors = [akTop, akRight, akBottom]
+      Glyph.Data = {
+        36040000424D3604000000000000360000002800000010000000100000000100
+        20000000000000040000640000006400000000000000000000002C86D8702D88
+        D8A62D87D8EA2D88D8F72D88D8F72D88D8F72D88D8F72D88D8F72D88D8F72D88
+        D8F72D88D8F72D87D8F72D88D8F12C86D893FFFFFF00FFFFFF00338ED9E6DCF0
+        FAF0A7DDF4FD9EDBF4FF96DAF3FF8ED8F3FF86D7F3FF7FD4F2FF79D3F2FF72D2
+        F1FF6CD0F1FF69CFF1FFC2EAF8FE338ED9F0FFFFFF00FFFFFF003594DAF7EFFA
+        FEFFA1E9F9FF91E5F8FF81E1F7FF72DEF6FF63DAF5FF54D7F4FF47D3F3FF39D0
+        F2FF2ECDF1FF26CBF0FFCAF2FBFF3594DAF7FFFFFF00FFFFFF00369ADAF8F2FA
+        FDFFB3EDFAFFA4E9F9FF95E6F8FF85E2F7FF81E1F7FF7AE0F7FF7CE0F7FF62DA
+        F5FF54D6F3FF47D3F2FFE8F9FDFF3594DAFFFFFFFF00FFFFFF0036A1DAF9F6FC
+        FEFFC8F2FCFFB9EFFBFF94DFEFFF8CE4F8FF99CED3FF91D0D8FF82E1F7FF6DDD
+        F6FF61DAF5FF57D7F4FFE7F8FDFF3594DAFFFFFFFF00FFFFFF0037A6DAFAFEFF
+        FFFFF8FDFFFFF6FDFFFFF4F4F2FFE8FAFEFFB6D7D8FFAAC7C5FF92D8E4FF7DE0
+        F7FF72DDF6FF68DBF5FFE9F9FDFF3594DAFFFFFFFF00FFFFFF0035ABDAFAE8F6
+        FBFF7EC5EAFF4AA3DFFF5E97C2FF4DA3DEFFF2F1EDFFF3EFECFFEDE5DFFFEDEB
+        E8FFF1F9FDFFF0F9FDFFFFFFFFFF3594DAFFFFFFFF00FFFFFF0036AADAF2F1FA
+        FDFF94DEF5FF93DCF4FFACBFBFFFBC9F90FF64A1CFFF3594DAFF3594DAFF3594
+        DAFF3594DAFF3594DAFF3594DAFF3594DAFFFFFFFF00FFFFFF0035AFDAF0F7FC
+        FEFF8EE4F8FF91DEF5FF9FE0F5FFC5C7C2FFDFA583FFEDC8B3FFEDCDB8FFE9BE
+        A3FFD58E64FFEEFBFEFFFAFDFFF936AFDAD4FFFFFF00FFFFFF0036B3DAF8FDFE
+        FEFFFEFFFFFFFEFEFFFFFDFEFFFFFEFFFFFFE7D6C9FFE0A987FFEBC7B0FFDDA1
+        7CFFBCA595FF839DA5FC7BAEBEEC6395A58E81818117FFFFFF0034B4D9D05EC2
+        E1FA60C3E2FA60C3E2FA60C3E2FA5FC3E2FA3CB6DBDDD5B1968CDDAB8DF9C4AF
+        A3FFD5D5D5FFBBBBBBFFA6A6A6FFA0A0A0FF848484E482828262FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00969696029494
+        94C5CBCBCBFFD2D2D2FFC9C9C9FFD2D2D2FFC6C6C6FF858585E8FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF009898
+        9855B2B2B2FFD6D6D6FF919191DA8E8E8EF5C0C0C0FF898989FDFFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF009B9B
+        9B54B5B5B5FFE6E6E6FF949494EF929292AF8F8F8FA68D8D8D90FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF009E9E
+        9E1B9C9C9CE4E1E1E1FFD2D2D2FF969696ABFFFFFF00FFFFFF00FFFFFF00FFFF
+        FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+        FF009E9E9E629D9D9DE89B9B9BF999999992FFFFFF00FFFFFF00
+      }
+      OnClick = btnPathToBeRelativeToHelperClick
+    end
+    object dePathToBeRelativeTo: TDirectoryEdit
+      AnchorSideLeft.Control = lbPathToBeRelativeTo
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = cbFileAssocFilenameStyle
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = btnPathToBeRelativeToHelper
+      Left = 120
+      Height = 23
+      Top = 56
+      Width = 770
+      ShowHidden = False
+      ButtonWidth = 23
+      NumGlyphs = 1
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Top = 1
+      MaxLength = 0
+      TabOrder = 1
+    end
+    object lbPathToBeRelativeTo: TLabel
+      AnchorSideLeft.Control = lbFileAssocFilenameStyle
+      AnchorSideTop.Control = dePathToBeRelativeTo
+      AnchorSideTop.Side = asrCenter
+      Left = 6
+      Height = 15
+      Top = 60
+      Width = 112
+      Caption = 'Path to be relative to:'
+      ParentColor = False
+    end
+    object btnPathToBeRelativeToAll: TButton
+      AnchorSideLeft.Control = lbFileAssocFilenameStyle
+      AnchorSideTop.Control = ckbFileAssocIcons
+      AnchorSideTop.Side = asrBottom
+      Left = 6
+      Height = 25
+      Top = 110
+      Width = 382
+      AutoSize = True
+      Caption = 'Apply current settings to all current configured filenames and paths'
+      OnClick = btnPathToBeRelativeToAllClick
+      TabOrder = 2
+    end
+    object ckbFileAssocIcons: TCheckBox
+      AnchorSideLeft.Control = lblApplySettingsFor
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = dePathToBeRelativeTo
+      AnchorSideTop.Side = asrBottom
+      Left = 162
+      Height = 19
+      Top = 85
+      Width = 48
+      BorderSpacing.Left = 6
+      Caption = 'Icons'
+      TabOrder = 3
+    end
+    object lblApplySettingsFor: TLabel
+      AnchorSideLeft.Control = lbFileAssocFilenameStyle
+      AnchorSideTop.Control = ckbFileAssocIcons
+      AnchorSideTop.Side = asrCenter
+      Left = 6
+      Height = 15
+      Top = 87
+      Width = 150
+      Caption = 'Do this for files and path for:'
+      ParentColor = False
+    end
+    object ckbFileAssocCommand: TCheckBox
+      AnchorSideLeft.Control = ckbFileAssocIcons
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = dePathToBeRelativeTo
+      AnchorSideTop.Side = asrBottom
+      Left = 216
+      Height = 19
+      Top = 85
+      Width = 82
+      BorderSpacing.Left = 6
+      Caption = 'Commands'
+      TabOrder = 4
+    end
+    object ckbFileAssocStartPath: TCheckBox
+      AnchorSideLeft.Control = ckbFileAssocCommand
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = dePathToBeRelativeTo
+      AnchorSideTop.Side = asrBottom
+      Left = 304
+      Height = 19
+      Top = 85
+      Width = 93
+      BorderSpacing.Left = 6
+      Caption = 'Starting paths'
+      TabOrder = 5
+    end
+  end
+  object pmPathToBeRelativeToHelper: TPopupMenu[4]
+    left = 596
+    top = 140
+  end
+end
