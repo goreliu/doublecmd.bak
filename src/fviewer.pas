@@ -1822,6 +1822,11 @@ begin
 
   ViewerControl.OnGuessEncoding:= @DetectEncoding;
 
+  // @Mine@
+  // 文本查看器默认使用书籍模式的颜色，因为可以配置
+  ViewerControl.Color:= gBookBackgroundColor;
+  ViewerControl.Font.Color:= gBookFontColor;
+  // @@
   FontOptionsToFont(gFonts[dcfViewer], ViewerControl.Font);
 
   FileList := TStringList.Create;

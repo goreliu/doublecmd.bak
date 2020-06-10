@@ -1,0 +1,7 @@
+/doublecmd.dbg
+/doublecmd.zdli
+/units/x86_64-win64-win32
+lib/
+*.exe*
+*.res
+*.w*x
