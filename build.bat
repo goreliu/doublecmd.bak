@@ -1,7 +1,7 @@
 @echo off
 
 rem the next two line must be changed before run on your computer
-set lazpath=D:\lazarus
+set lazpath=C:\Users\goreliu\scoop\apps\lazarus\current
 
 set PATH=%lazpath%;%PATH%
 
