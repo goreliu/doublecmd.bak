@@ -172,14 +172,29 @@ begin
   Result:= MountUnmount(ObjectPath, False, nil);
 end;
 
+function CheckUDisks({%H-}Parameter : Pointer): PtrInt;
+var
+  AClient: PGObject;
+  AError: PGError = nil;
+begin
+  Result:= 0;
+  AClient := udisks_client_new_sync (nil, @AError);
+  HasUDisks2:= Assigned(AClient);
+  if HasUDisks2 then
+    g_object_unref(AClient)
+  else begin
+    PrintError(AError);
+  end;
+  EndThread;
+end;
+
 var
   libudisks2_so_0: TLibHandle;
 
-function Initialize: Boolean;
+procedure Initialize;
 begin
   libudisks2_so_0:= SafeLoadLibrary('libudisks2.so.0');
-  Result:= (libudisks2_so_0 <> NilHandle);
-  if Result then
+  if (libudisks2_so_0 <> NilHandle) then
   try
     @udisks_block_get_device:= SafeGetProcAddress(libudisks2_so_0, 'udisks_block_get_device');
     @udisks_block_get_symlinks:= SafeGetProcAddress(libudisks2_so_0, 'udisks_block_get_symlinks');
@@ -189,21 +204,24 @@ begin
     @udisks_client_new_sync:= SafeGetProcAddress(libudisks2_so_0, 'udisks_client_new_sync');
     @udisks_filesystem_call_unmount_sync:= SafeGetProcAddress(libudisks2_so_0, 'udisks_filesystem_call_unmount_sync');
     @udisks_filesystem_call_mount_sync:= SafeGetProcAddress(libudisks2_so_0, 'udisks_filesystem_call_mount_sync');
+
+    BeginThread(@CheckUDisks);
   except
     on E: Exception do
     begin
-      Result:= False;
       UnloadLibrary(libudisks2_so_0);
+      libudisks2_so_0:= NilHandle;
       Print(E.Message);
     end;
   end;
 end;
 
 initialization
-  HasUDisks2:= Initialize;
+  Initialize;
 
 finalization
-  if HasUDisks2 then UnloadLibrary(libudisks2_so_0);
+  if (libudisks2_so_0 <> NilHandle) then
+    UnloadLibrary(libudisks2_so_0);
 
 end.
 
