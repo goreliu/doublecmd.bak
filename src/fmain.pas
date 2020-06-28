@@ -1133,8 +1133,6 @@ begin
   HMMainForm.RegisterActionList(actionlst);
   { *HotKeys* }
 
-  lastWindowState:= WindowState;
-
   UpdateActionIcons;
 
   LoadTabs;
@@ -3891,6 +3889,8 @@ begin
 
   if gConfig.GetValue(ANode, 'Maximized', True) then
     Self.WindowState := wsMaximized;
+
+  lastWindowState := WindowState;
 end;
 
 procedure TfrmMain.WMMove(var Message: TLMMove);
