@@ -679,7 +679,7 @@ type
     procedure tbPasteClick(Sender: TObject);
     procedure AllProgressOnUpdateTimer(Sender: TObject);
     procedure OnCmdBoxInput(ACmdBox: TCmdBox; AInput: String);
-{$IF DEFINED(LCLQT) or DEFINED(LCLQT5)}
+{$IF (DEFINED(LCLQT) or DEFINED(LCLQT5)) and not DEFINED(MSWINDOWS)}
   private
     QEventHook: QObject_hookH;
     function QObjectEventFilter(Sender: QObjectH; Event: QEventH): Boolean; cdecl;
@@ -936,7 +936,7 @@ var
   LastActiveWindow: TCustomForm = nil;
 {$ENDIF}
 
-{$IF DEFINED(LCLQT) or DEFINED(LCLQT5)}
+{$IF (DEFINED(LCLQT) or DEFINED(LCLQT5)) and not DEFINED(MSWINDOWS)}
 var
   CloseQueryResult: Boolean = False;
 {$ENDIF}
@@ -1141,7 +1141,7 @@ begin
   TDriveWatcher.Initialize(GetWindowHandle(Self));
   TDriveWatcher.AddObserver(@OnDriveWatcherEvent);
 
-{$IF DEFINED(LCLQT) or DEFINED(LCLQT5)}
+{$IF (DEFINED(LCLQT) or DEFINED(LCLQT5)) and not DEFINED(MSWINDOWS)}
   // Fixes bug - [0000033] "DC cancels shutdown in KDE"
   // http://doublecmd.sourceforge.net/mantisbt/view.php?id=33
   QEventHook:= QObject_hook_create(TQtWidget(Self.Handle).Widget);
@@ -1667,7 +1667,7 @@ begin
 
   FreeAndNil(DrivesList);
 
-{$IF DEFINED(LCLQT) or DEFINED(LCLQT5)}
+{$IF (DEFINED(LCLQT) or DEFINED(LCLQT5)) and not DEFINED(MSWINDOWS)}
   QObject_hook_destroy(QEventHook);
 {$ENDIF}
 
@@ -1684,7 +1684,7 @@ begin
   end
   else
     CanClose := True;
-{$IF DEFINED(LCLQT) or DEFINED(LCLQT5)}
+{$IF (DEFINED(LCLQT) or DEFINED(LCLQT5)) and not DEFINED(MSWINDOWS)}
   CloseQueryResult:= CanClose;
 {$ENDIF}
 end;
@@ -6535,7 +6535,7 @@ begin
   Cancel := not CanClose;
 end;
 
-{$IF DEFINED(LCLQT) or DEFINED(LCLQT5)}
+{$IF (DEFINED(LCLQT) or DEFINED(LCLQT5)) and not DEFINED(MSWINDOWS)}
 function TfrmMain.QObjectEventFilter(Sender: QObjectH; Event: QEventH): Boolean; cdecl;
 begin
   Result:= False;
