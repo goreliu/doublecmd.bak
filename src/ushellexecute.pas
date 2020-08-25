@@ -28,6 +28,9 @@ interface
 uses
   Classes, uFile, uFileView, fMain;
 
+const
+  ASCII_DLE = #16;
+
 type
   TPrepareParameterOption = (ppoNormalizePathDelims, ppoReplaceTilde);
   TPrepareParameterOptions = set of TPrepareParameterOption;
@@ -619,6 +622,15 @@ type
               state.funct := ftJustSetTheShowFlag;
               state.pos := spComplete;
               Inc(Index);
+            end;
+
+            ASCII_DLE:
+            begin
+              AddParsedText(state.functStartIndex);
+              parseStartIndex := Index + 1;
+              Index := Length(sSourceStr) + 1;
+              state.pos := spComplete;
+              Break;
             end;
 
             '%', '#':
