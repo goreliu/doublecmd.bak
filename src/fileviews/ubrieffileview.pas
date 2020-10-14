@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Controls, LMessages, Grids, Graphics,
   uDisplayFile, DCXmlConfig, uTypes, uFileViewWithGrid, uFile,
-  uFileSource;
+  uFileSource, uFileProperty;
 
 type
 
@@ -47,6 +47,7 @@ type
     function GetVisibleFilesIndexes: TRange; override;
     function GetIconRect(FileIndex: PtrInt): TRect; override;
     procedure MouseScrollTimer(Sender: TObject); override;
+    procedure DoFileUpdated(AFile: TDisplayFile; UpdatedProperties: TFilePropertiesTypes = []); override;
   public
     function Clone(NewParent: TWinControl): TBriefFileView; override;
     procedure SaveConfiguration(AConfig: TXmlConfig; ANode: TXmlNode; ASaveHistory:boolean); override;
@@ -146,7 +147,9 @@ end;
 
 procedure TBriefDrawGrid.CalculateColumnWidth;
 var
-  I, J, L, M: Integer;
+  I, J, M: Integer;
+  ARefresh: Boolean;
+  AFile: TDisplayFile;
 begin
   if not Assigned(FBriefView.FFiles) or (FBriefView.FFiles.Count = 0) then Exit;
   if gBriefViewMode = bvmFixedWidth then
@@ -159,18 +162,22 @@ begin
     begin
       J:= 0;
       M:= 0;
+      ARefresh:= (Canvas.Font.Name <> gFonts[dcfMain].Name) or
+                 (Canvas.Font.Size <> gFonts[dcfMain].Size) or
+                 (Canvas.Font.Style <> gFonts[dcfMain].Style);
+      FontOptionsToFont(gFonts[dcfMain], Canvas.Font);
       for I:= 0 to FBriefView.FFiles.Count - 1 do
       begin
-        L:= Length(FBriefView.FFiles[I].FSFile.Name);
-        if L > M then
+        AFile:= FBriefView.FFiles[I];
+        if ARefresh or (AFile.Tag <= 0) then begin
+          AFile.Tag:= Canvas.TextWidth(AFile.FSFile.Name);
+        end;
+        if AFile.Tag > M then
         begin
-          M:= L;
+          M:= AFile.Tag;
           J:= I;
         end;
       end;
-      Canvas.Font.Name          := gFonts[dcfMain].Name;
-      Canvas.Font.Size          := gFonts[dcfMain].Size;
-      Canvas.Font.Style         := gFonts[dcfMain].Style;
       M:= Canvas.TextWidth(FBriefView.FFiles[J].FSFile.Name + 'WWW');
       if (gShowIcons = sim_none) then
         M:= M + 2
@@ -603,6 +610,13 @@ begin
     APoint := dgPanel.ScreenToClient(Mouse.CursorPos);
     TBriefDrawGrid(dgPanel).DoMouseMoveScroll(APoint.X, APoint.Y);
   end;
+end;
+
+procedure TBriefFileView.DoFileUpdated(AFile: TDisplayFile;
+  UpdatedProperties: TFilePropertiesTypes);
+begin
+  inherited DoFileUpdated(AFile, UpdatedProperties);
+  AFile.Tag:= -1;
 end;
 
 function TBriefFileView.Clone(NewParent: TWinControl): TBriefFileView;
