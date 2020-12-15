@@ -409,10 +409,18 @@ end;
 procedure ScreenFormEvent(Self, Sender: TObject; Form: TCustomForm);
 var
   Handle: HWND;
+  AWindow: QWidgetH;
 begin
   Handle:= GetWindowHandle(Form);
   AllowDarkModeForWindow(Handle, True);
   RefreshTitleBarThemeColor(Handle);
+
+  if (Form is THintWindow) then
+  begin
+    AWindow:= QWidget_window(TQtWidget(Form.Handle).GetContainerWidget);
+    QWidget_setWindowFlags(AWindow, QtTool or QtFramelessWindowHint);
+    QWidget_setAttribute(AWindow, QtWA_ShowWithoutActivating);
+  end;
 end;
 {$ENDIF}
 

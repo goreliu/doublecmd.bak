@@ -76,7 +76,6 @@ type
     ActionList: TActionList;
     edtFileNameLeft: TFileNameEdit;
     edtFileNameRight: TFileNameEdit;
-    ImageList: TImageList;
     MainMenu: TMainMenu;
     miAutoCompare: TMenuItem;
     miDivider10: TMenuItem;
@@ -166,6 +165,8 @@ type
     btnCopyRightToLeft: TToolButton;
     btnCopyLeftToRight: TToolButton;
     Divider5: TToolButton;
+    btnEditUndo: TToolButton;
+    btnEditRedo: TToolButton;
     procedure actAboutExecute(Sender: TObject);
     procedure actBinaryCompareExecute(Sender: TObject);
     procedure actCancelCompareExecute(Sender: TObject);
@@ -243,6 +244,7 @@ type
   public
     constructor Create(TheOwner: TComponent); override;
     destructor Destroy; override;
+    procedure AfterConstruction; override;
   published
     procedure cm_CopyLeftToRight(const Params: array of string);
     procedure cm_CopyRightToLeft(const Params: array of string);
@@ -488,6 +490,8 @@ begin
   btnRightEncoding.Enabled:= not actBinaryCompare.Checked;
   actCopyLeftToRight.Enabled:= not actBinaryCompare.Checked;
   actCopyRightToLeft.Enabled:= not actBinaryCompare.Checked;
+  actEditUndo.Enabled:= not actBinaryCompare.Checked;
+  actEditRedo.Enabled:= not actBinaryCompare.Checked;
   actSave.Enabled:= not actBinaryCompare.Checked;
   actSaveAs.Enabled:= not actBinaryCompare.Checked;
   actSaveLeft.Enabled:= not actBinaryCompare.Checked;
@@ -1082,6 +1086,14 @@ begin
   HotMan.UnRegister(Self);
   inherited Destroy;
   if Assigned(FWaitData) then FWaitData.Done;
+end;
+
+procedure TfrmDiffer.AfterConstruction;
+begin
+  inherited AfterConstruction;
+  ToolBar.ImagesWidth:= gToolIconsSize;
+  ToolBar.SetButtonSize(gToolIconsSize + ScaleX(6, 96),
+                        gToolIconsSize + ScaleY(6, 96));
 end;
 
 procedure TfrmDiffer.BuildHashList(bLeft, bRight: Boolean);
