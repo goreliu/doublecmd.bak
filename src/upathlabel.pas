@@ -4,6 +4,7 @@
     Label displaying a path, highlighting directories with mouse.
 
     Copyright (C) 2010-2011  Przemysław Nagay (cobines@gmail.com)
+    Copyright (C) 2014-2020  Alexander Koblov (alexx2000@mail.ru)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@ unit uPathLabel;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls;
+  Classes, SysUtils, StdCtrls, Graphics;
 
 type
 
@@ -35,10 +36,12 @@ type
 
   TPathLabel = class(TLabel)
   private
+    FActive: Boolean;
     FAllowHighlight: Boolean;
     FHighlightStartPos: Integer;
     FHighlightText: String;
     FMousePos: Integer;
+    FColors: array[0..3] of TColor;
     {en
        How much space to leave between the text and left border.
     }
@@ -55,6 +58,9 @@ type
        it is highlighted, so that user can click on it.
     }
     procedure Highlight;
+
+    function GetColor(const AIndex: Integer): TColor;
+    procedure SetColor(const AIndex: Integer; const AValue: TColor); overload;
 
   protected
 
@@ -78,18 +84,28 @@ type
     property AllowHighlight: Boolean read FAllowHighlight write FAllowHighlight;
     property LeftSpacing: Integer read FLeftSpacing write FLeftSpacing;
     property SelectedDir: String read FSelectedDir;
+
+    property ActiveColor: TColor index 0 read GetColor write SetColor;
+    property ActiveFontColor: TColor index 1 read GetColor write SetColor;
+    property InactiveColor: TColor index 2 read GetColor write SetColor;
+    property InactiveFontColor: TColor index 3 read GetColor write SetColor;
   end;
 
 implementation
 
 uses
-  Controls, Graphics, math;
+  Controls, Math;
 
 { TPathLabel }
 
 constructor TPathLabel.Create(AOwner: TComponent; bAllowHighlight: Boolean);
 begin
   FLeftSpacing := 3; // set before painting
+
+  FColors[0] := clHighlight;
+  FColors[1] := clHighlightText;
+  FColors[2] := clBtnFace;
+  FColors[3] := clBtnText;
 
   inherited Create(AOwner);
 
@@ -130,15 +146,16 @@ begin
   case Active of
     False:
       begin
-        Color      := clBtnFace;
-        Font.Color := clBtnText;
+        Color      := InactiveColor;
+        Font.Color := InactiveFontColor;
       end;
     True:
       begin
-        Color      := clHighlight;
-        Font.Color := clHighlightText;
+        Color      := ActiveColor;
+        Font.Color := ActiveFontColor;
       end;
   end;
+  FActive := Active;
 end;
 
 procedure TPathLabel.Highlight;
@@ -211,6 +228,17 @@ begin
 
     Self.Invalidate;
   end;
+end;
+
+function TPathLabel.GetColor(const AIndex: Integer): TColor;
+begin
+  Result:= FColors[AIndex];
+end;
+
+procedure TPathLabel.SetColor(const AIndex: Integer; const AValue: TColor);
+begin
+  FColors[AIndex] := AValue;
+  SetActive(FActive);
 end;
 
 procedure TPathLabel.TextChanged;
