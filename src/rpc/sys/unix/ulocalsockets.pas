@@ -17,6 +17,8 @@ function GetSocketClientProcessId(fd: cint): pid_t;
 function SendHandle(sock: cint; fd: cint): Boolean;
 function RecvHandle(sock: cint): cint;
 
+function SocketDirectory: String;
+
 implementation
 
 uses
@@ -81,11 +83,6 @@ type
     cmcred_groups: array[0..15] of gid_t;  //* groups */
   end;
 
-  cmsg = record
-    hdr: cmsghdr;
-    cred: cmsgcred;
-  end;
-
 {$ENDIF}
 
 const
@@ -145,36 +142,38 @@ var
   buf: Byte;
   iov: iovec;
   msg: msghdr;
-  cmsga: cmsg;
+  cmsga: Pcmsghdr;
   nbytes: ssize_t;
+  data: array[Byte] of Byte;
 begin
+  cmsga := Pcmsghdr(@data[0]);
   {*
    * The backend doesn't care what we send here, but it wants
    * exactly one character to force recvmsg() to block and wait
    * for us.
    *}
-   buf := 0;
-   iov.iov_base := @buf;
-   iov.iov_len := 1;
+  buf := 0;
+  iov.iov_base := @buf;
+  iov.iov_len := 1;
 
-   cmsga.hdr.cmsg_len := sizeof(cmsg);
-   cmsga.hdr.cmsg_level := SOL_SOCKET;
-   cmsga.hdr.cmsg_type := SCM_CREDS;
-   {*
-   * cmsg.cred will get filled in with the correct information
-   * by the kernel when this message is sent.
-   *}
-   msg.msg_name := nil;
-   msg.msg_namelen := 0;
-   msg.msg_iov := @iov;
-   msg.msg_iovlen := 1;
-   msg.msg_control := @cmsga;
-   msg.msg_controllen := sizeof(cmsga);
-   msg.msg_flags := MSG_NOSIGNAL;
+  cmsga^.cmsg_len := CMSG_LEN(SizeOf(cmsgcred));
+  cmsga^.cmsg_level := SOL_SOCKET;
+  cmsga^.cmsg_type := SCM_CREDS;
+  {*
+  * cmsg.cred will get filled in with the correct information
+  * by the kernel when this message is sent.
+  *}
+  msg.msg_name := nil;
+  msg.msg_namelen := 0;
+  msg.msg_iov := @iov;
+  msg.msg_iovlen := 1;
+  msg.msg_control := cmsga;
+  msg.msg_controllen := CMSG_SPACE(SizeOf(cmsgcred));
+  msg.msg_flags := MSG_NOSIGNAL;
 
   nbytes := SendMessage(fd, @msg, MSG_NOSIGNAL);
   if (nbytes = -1) then
-     DCDebug('SendMessage: ', SysErrorMessage(fpgetCerrno));
+    DCDebug('SendMessage: ', SysErrorMessage(fpgetCerrno));
 end;
 {$ENDIF}
 
@@ -202,15 +201,18 @@ var
   buf: Byte;
   iov: iovec;
   msg: msghdr;
-  cmsga: cmsg;
+  cmsga: Pcmsghdr;
   nbytes: ssize_t;
+  data: array[Byte] of Byte;
 begin
+  cmsga := Pcmsghdr(@data[0]);
+
   msg.msg_name := nil;
   msg.msg_namelen := 0;
   msg.msg_iov := @iov;
   msg.msg_iovlen := 1;
-  msg.msg_control := @cmsga;
-  msg.msg_controllen := sizeof(cmsga);
+  msg.msg_control := cmsga;
+  msg.msg_controllen := CMSG_SPACE(SizeOf(cmsgcred));
   msg.msg_flags := MSG_NOSIGNAL;
   {*
   * The one character which is received here is not meaningful;
@@ -224,7 +226,7 @@ begin
   if (nbytes = -1) then
     DCDebug('RecvMessage: ', SysErrorMessage(fpgetCerrno));
 
-  Result:= cmsga.cred.cmcred_pid;
+  Result:= Pcmsgcred(CMSG_DATA(cmsga))^.cmcred_pid;
 end;
 {$ENDIF}
 
@@ -306,7 +308,6 @@ begin
   Move(CMSG_DATA(cmsga)^, Result, SizeOf(Result));
 end;
 
-
 function CheckParent(ProcessId, ParentId: pid_t): Boolean;
 begin
   DCDebug(['ProcessId: ', ProcessId]);
@@ -341,6 +342,33 @@ begin
   Result:= CheckParent(FpGetppid, ProcessId) and
            (GetProcessFileName(ProcessId) = GetProcessFileName(GetProcessId));
   DCDebug(['VerifyParent: ', Result]);
+end;
+
+function SocketDirectory: String;
+var
+  Stat: TStat;
+  UserID: TUid;
+begin
+  UserID:= fpGetUID;
+  if UserID = 0 then begin
+    UserID:= GetProcessUserId(StrToInt(ParamStr(2)));
+  end;
+  Result:= GetTempDir + ApplicationName + '-' + IntToStr(UserID);
+  // Verify directory owner
+  if not DirectoryExists(Result) then
+  begin
+    if fpMkDir(Result, &700) <> 0 then
+      RaiseLastOSError;
+  end
+  else begin
+    if fpStat(Result, Stat) <> 0 then
+      RaiseLastOSError;
+    if (Stat.st_uid <> UserID) and (fpChown(Result, UserID, Stat.st_gid) < 0) then
+      RaiseLastOSError;
+    if ((Stat.st_mode and $0FFF) <> &700) and (fpChmod(Result, &700) < 0) then
+      RaiseLastOSError;
+  end;
+  Result += PathDelim;
 end;
 
 end.

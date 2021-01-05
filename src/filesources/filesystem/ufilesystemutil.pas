@@ -71,6 +71,9 @@ type
     FReserveSpace,
     FCheckFreeSpace: Boolean;
     FSkipAllBigFiles: Boolean;
+{$IF DEFINED(UNIX)}
+    FSkipAllSpecialFiles: Boolean;
+{$ENDIF}
     FSkipOpenForReadingError: Boolean;
     FSkipOpenForWritingError: Boolean;
     FSkipReadError: Boolean;
@@ -156,7 +159,11 @@ implementation
 uses
   uDebug, uOSUtils, DCStrUtils, FileUtil, uFindEx, DCClassesUtf8, uFileProcs, uLng,
   DCBasicTypes, uFileSource, uFileSystemFileSource, uFileProperty, uAdministrator,
-  StrUtils, DCDateTimeUtils, uShowMsg, Forms, LazUTF8, uHash;
+  StrUtils, DCDateTimeUtils, uShowMsg, Forms, LazUTF8, uHash
+{$IFDEF UNIX}
+  , BaseUnix
+{$ENDIF}
+  ;
 
 const
   HASH_TYPE = HASH_BEST;
@@ -842,33 +849,35 @@ var
   Message: String;
   RetryDelete: Boolean;
 begin
-  if (Mode in [fsohcmAppend, fsohcmResume]) or
-     (not RenameFileUAC(SourceFile.FullPath, TargetFileName)) then
+  if not (Mode in [fsohcmAppend, fsohcmResume]) then
   begin
-    if FVerify then FStatistics.TotalBytes += SourceFile.Size;
-    if CopyFile(SourceFile, TargetFileName, Mode) then
-    begin
-      repeat
-        RetryDelete := True;
-        if FileIsReadOnly(SourceFile.Attributes) then
-          FileSetReadOnlyUAC(SourceFile.FullPath, False);
-        Result := DeleteFileUAC(SourceFile.FullPath);
-        if (not Result) and (FDeleteFileOption = fsourInvalid) then
-        begin
-          Message := Format(rsMsgNotDelete, [WrapTextSimple(SourceFile.FullPath, 100)]) + LineEnding + LineEnding + mbSysErrorMessage;
-          case AskQuestion('', Message, [fsourSkip, fsourRetry, fsourAbort, fsourSkipAll], fsourSkip, fsourAbort) of
-            fsourAbort: AbortOperation;
-            fsourRetry: RetryDelete := False;
-            fsourSkipAll: FDeleteFileOption := fsourSkipAll;
-          end;
+    if RenameFileUAC(SourceFile.FullPath, TargetFileName) then
+      Exit(True);
+    if (GetLastOSError <> ERROR_NOT_SAME_DEVICE) then
+      Exit(False);
+  end;
+
+  if FVerify then FStatistics.TotalBytes += SourceFile.Size;
+  if CopyFile(SourceFile, TargetFileName, Mode) then
+  begin
+    repeat
+      RetryDelete := True;
+      if FileIsReadOnly(SourceFile.Attributes) then
+        FileSetReadOnlyUAC(SourceFile.FullPath, False);
+      Result := DeleteFileUAC(SourceFile.FullPath);
+      if (not Result) and (FDeleteFileOption = fsourInvalid) then
+      begin
+        Message := Format(rsMsgNotDelete, [WrapTextSimple(SourceFile.FullPath, 100)]) + LineEnding + LineEnding + mbSysErrorMessage;
+        case AskQuestion('', Message, [fsourSkip, fsourRetry, fsourAbort, fsourSkipAll], fsourSkip, fsourAbort) of
+          fsourAbort: AbortOperation;
+          fsourRetry: RetryDelete := False;
+          fsourSkipAll: FDeleteFileOption := fsourSkipAll;
         end;
-      until RetryDelete;
-    end
-    else
-      Result := False;
+      end;
+    until RetryDelete;
   end
   else
-    Result := True;
+    Result := False;
 end;
 
 function TFileSystemOperationHelper.ProcessNode(aFileTreeNode: TFileTreeNode;
@@ -1139,6 +1148,27 @@ begin
     Result:= True
   else begin
     Result:= False;
+
+{$IF DEFINED(UNIX)}
+    if not fpS_ISREG(aNode.TheFile.Attributes) then
+    begin
+      if FSkipAllSpecialFiles then Exit(False);
+
+      case AskQuestion('', Format(rsMsgCannotCopySpecialFile, [LineEnding + aNode.TheFile.FullPath]),
+                       [fsourSkip, fsourSkipAll, fsourAbort],
+                       fsourSkip, fsourAbort) of
+        fsourSkip:
+          Exit(False);
+        fsourSkipAll:
+          begin
+            FSkipAllSpecialFiles:= True;
+            Exit(False);
+          end
+        else
+          AbortOperation;
+        end;
+    end;
+{$ENDIF}
 
     if (aNode.TheFile.Size > GetDiskMaxFileSize(ExtractFileDir(AbsoluteTargetFileName))) then
       case AskQuestion('', Format(rsMsgFileSizeTooBig, [aNode.TheFile.Name]),
