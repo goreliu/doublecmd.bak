@@ -164,6 +164,16 @@ uses
 {$ENDIF}
   ;
 
+function GetCaption(const ACaption: TCaption): TCaption;
+begin
+{$IFNDEF LCLWIN32}
+  if (Pos('&', StringReplace(ACaption, '&&', '', [rfReplaceAll])) = 0) then
+    Result:= '&' + ACaption
+  else
+{$ENDIF}
+  Result:= ACaption;
+end;
+
 { THotDir.Create }
 constructor THotDir.Create;
 begin
@@ -351,7 +361,7 @@ var
             DirExistUnknown, DirExist:
             begin
               localmi := TMenuItem.Create(ParamMenuItem);
-              localmi.Caption := GetMenuCaptionAccordingToOptions(HotDir[I - 1].HotDirName,HotDir[I - 1].HotDirPath);
+              localmi.Caption:= GetCaption(GetMenuCaptionAccordingToOptions(HotDir[I - 1].HotDirName,HotDir[I - 1].HotDirPath));
               localmi.tag := (I - 1) + TagOffset;
               localmi.OnClick := ProcedureWhenHotDirItemClicked;
               ParamMenuItem.Add(localmi);
@@ -368,7 +378,7 @@ var
           if KindHotDirMenuPopulation <> mpPATHHELPER then
           begin
             localmi := TMenuItem.Create(ParamMenuItem);
-            localmi.Caption := HotDir[I - 1].HotDirName;
+            localmi.Caption := GetCaption(HotDir[I - 1].HotDirName);
             localmi.tag := (I - 1) + TagOffset;
             localmi.OnClick := ProcedureWhenHotDirItemClicked;
             ParamMenuItem.Add(localmi);
@@ -392,7 +402,7 @@ var
         hd_STARTMENU:
         begin
           localmi := TMenuItem.Create(ParamMenuItem);
-          localmi.Caption := HotDir[I - 1].HotDirName;
+          localmi.Caption := GetCaption(HotDir[I - 1].HotDirName);
           if gIconsInMenus then localmi.ImageIndex:=ICONINDEX_SUBMENU;
           ParamMenuItem.Add(localmi);
           CompleteMenu(localmi);
@@ -457,7 +467,7 @@ begin
             DirExistUnknown, DirExist:
             begin
               miMainTree := TMenuItem.Create(mncmpMenuComponentToPopulate);
-              miMainTree.Caption := GetMenuCaptionAccordingToOptions(HotDir[I - 1].HotDirName,HotDir[I - 1].HotDirPath);
+              miMainTree.Caption := GetCaption(GetMenuCaptionAccordingToOptions(HotDir[I - 1].HotDirName,HotDir[I - 1].HotDirPath));
               miMainTree.tag := (I - 1) + TagOffset;
               miMainTree.OnClick := ProcedureWhenHotDirItemClicked;
 
@@ -474,7 +484,7 @@ begin
         hd_NULL, hd_COMMAND:
         begin
           miMainTree := TMenuItem.Create(mncmpMenuComponentToPopulate);
-          miMainTree.Caption := HotDir[I - 1].HotDirName;
+          miMainTree.Caption := GetCaption(HotDir[I - 1].HotDirName);
           miMainTree.tag := (I - 1) + TagOffset;
           miMainTree.OnClick := ProcedureWhenHotDirItemClicked;
 
@@ -501,7 +511,7 @@ begin
         hd_STARTMENU:
         begin
           miMainTree := TMenuItem.Create(mncmpMenuComponentToPopulate);
-          miMainTree.Caption := HotDir[I - 1].HotDirName;
+          miMainTree.Caption := GetCaption(HotDir[I - 1].HotDirName);
           if gIconsInMenus then miMainTree.ImageIndex := ICONINDEX_SUBMENU;
           if mncmpMenuComponentToPopulate.ClassType = TPopupMenu then
             TPopupMenu(mncmpMenuComponentToPopulate).Items.Add(miMainTree)
