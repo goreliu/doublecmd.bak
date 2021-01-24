@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Double Commander 0.8.0 alpha\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-17 23:08+0300\n"
-"PO-Revision-Date: 2021-01-02 16:08+0900\n"
+"PO-Revision-Date: 2021-01-23 07:54+0900\n"
 "Last-Translator: Kazunari Sekigawa <kazunari.sekigawa@gmail.com>\n"
 "Language-Team: Language <email@address>\n"
 "MIME-Version: 1.0\n"
@@ -10652,7 +10652,9 @@ msgstr "ビューア"
 msgid ""
 "A setup with that name already exists.\n"
 "Do you want to overwrite it?\n"
-msgstr "その名前のセットアップは既に存在します.上書きしますか？\n"
+msgstr ""
+"その名前のセットアップは既に存在します.\n"
+"上書きしますか？\n"
 
 #: ulng.rshotkeyfileconfirmdefault
 msgid "Are you sure you want to restore default?"
@@ -10875,6 +10877,10 @@ msgstr ""
 msgid "You can not copy/move a file \"%s\" to itself!"
 msgstr "ファイル＜%s＞をそれ自身にコピー/移動することはできません！"
 
+#: ulng.rsmsgcannotcopyspecialfile
+msgid "Cannot copy special file %s"
+msgstr "指定されたファイル%sをコピーできません"
+
 #: ulng.rsmsgcannotdeletedirectory
 msgid "Cannot delete directory %s"
 msgstr "ディレクトリ＜%s＞を削除できません"
@@ -10990,6 +10996,10 @@ msgstr "サーバー＜%s＞に接続できません."
 #: ulng.rsmsgerrcannotcopyfile
 msgid "Cannot copy file %s to %s"
 msgstr "ファイル＜%s＞を＜%s＞にコピーできません"
+
+#: ulng.rsmsgerrcannotmovefile
+msgid "Cannot move file %s"
+msgstr "ファイル %sを移動できません"
 
 #: ulng.rsmsgerrcreatefiledirectoryexists
 msgid "There already exists a directory named \"%s\"."
@@ -12535,7 +12545,7 @@ msgstr "アーカイ構成のエクスポート"
 #: ulng.rsoptarchiverexportdone
 msgctxt "ulng.rsoptarchiverexportdone"
 msgid "Exportation of %d elements to file \"%s\" completed."
-msgstr "ファイル “%s”への%d要素のエクスポートが完了しました."
+msgstr "%d要素のファイル”%s”へのエクスポートが完了しました."
 
 #: ulng.rsoptarchiverexportprompt
 msgctxt "ulng.rsoptarchiverexportprompt"
@@ -12557,7 +12567,7 @@ msgstr "アーカイバ構成のインポート"
 #: ulng.rsoptarchiverimportdone
 msgctxt "ulng.rsoptarchiverimportdone"
 msgid "Importation of %d elements from file \"%s\" completed."
-msgstr "ファイル”%s”からの%d要素のインポートが完了しました."
+msgstr "%d要素のファイル”%s”からのインポートが完了しました."
 
 #: ulng.rsoptarchiverimportfile
 msgid "Select the file to import archiver configuration(s)"
@@ -13107,7 +13117,7 @@ msgstr "ツールヒント ファイル タイプの構成をエクスポート"
 #: ulng.rsopttooltipfiletypeexportdone
 msgctxt "ulng.rsopttooltipfiletypeexportdone"
 msgid "Exportation of %d elements to file \"%s\" completed."
-msgstr "ファイル “%s”への%d要素のエクスポートが完了しました."
+msgstr "%d要素のファイル”%s”へのエクスポートが完了しました."
 
 #: ulng.rsopttooltipfiletypeexportprompt
 msgctxt "ulng.rsopttooltipfiletypeexportprompt"
@@ -13121,7 +13131,7 @@ msgstr "ツールヒント ファイル タイプの構成をインポート"
 #: ulng.rsopttooltipfiletypeimportdone
 msgctxt "ulng.rsopttooltipfiletypeimportdone"
 msgid "Importation of %d elements from file \"%s\" completed."
-msgstr "ファイル”%s”からの%d要素のインポートが完了しました."
+msgstr "%d要素のファイル”%s”からのインポートが完了しました."
 
 #: ulng.rsopttooltipfiletypeimportfile
 msgid "Select the file to import tooltip file type configuration(s)"
