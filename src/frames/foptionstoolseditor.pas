@@ -27,7 +27,7 @@ unit fOptionsToolsEditor;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls, ExtCtrls, Dialogs,
+  Classes, SysUtils, StdCtrls, ExtCtrls, Dialogs, LCLVersion,
   Buttons, EditBtn, Menus, SpinEx, fOptionsFrame, fOptionsToolBase;
 
 type
@@ -36,7 +36,7 @@ type
 
   TfrmOptionsEditor = class(TfrmOptionsToolBase)
     gbInternalEditor: TGroupBox;
-    lblRightEdge: TLabel;
+    chkRightEdge: TCheckBox;
     pnlBooleanOptions: TPanel;
     chkAutoIndent: TCheckBox;
     chkTrimTrailingSpaces: TCheckBox;
@@ -63,7 +63,12 @@ implementation
 {$R *.lfm}
 
 uses
-  SynEdit, uGlobs, uLng, fEditor;
+  {$if lcl_fullversion < 2010000}
+  SynEdit
+  {$else}
+  SynEditTypes
+  {$endif}
+  , uGlobs, uLng, fEditor;
 
 { TfrmOptionsEditor }
 
@@ -83,6 +88,7 @@ begin
   chkAutoIndent.Checked := eoAutoIndent in gEditorSynEditOptions;
   chkTabIndent.Checked := eoTabIndent in gEditorSynEditOptions;
   chkSmartTabs.Checked := eoSmartTabs in gEditorSynEditOptions;
+  chkRightEdge.Checked := not (eoHideRightMargin in gEditorSynEditOptions);
   edTabWidth.Text := IntToStr(gEditorSynEditTabWidth);
   seeRightEdge.Value := gEditorSynEditRightEdge;
 end;
@@ -99,6 +105,7 @@ function TfrmOptionsEditor.Save: TOptionsEditorSaveFlags;
 
 begin
   Result:= inherited Save;
+  UpdateOptionFromBool(not chkRightEdge.Checked, eoHideRightMargin);
   UpdateOptionFromBool(chkScrollPastEndLine.Checked, eoScrollPastEoL);
   UpdateOptionFromBool(chkShowSpecialChars.Checked, eoShowSpecialChars);
   UpdateOptionFromBool(chkTrimTrailingSpaces.Checked, eoTrimTrailingSpaces);
