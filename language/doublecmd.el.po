@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: Double Commander 1.0.0 alpha\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-01-17 23:08+0300\n"
-"PO-Revision-Date: 2020-02-01 00:19+0100\n"
-"Last-Translator: Anastasios Kazakis <orca.surfshark@gmail.com>\n"
+"PO-Revision-Date: 2021-03-02 12:30+0200\n"
+"Last-Translator: Anastasios Kazakis <orca.srfshark@gmail.com>\n"
 "Language-Team: Anastasios Kazakis <orca.surfshark@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Native-Language: ελληνικά\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.3\n"
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Language: el_GR\n"
@@ -36,16 +36,12 @@ msgid "Files found: %d  (Identical: %d, Different: %d, Unique left: %d, Unique r
 msgstr "Ευρεθέντα αρχεία: %d  (Όμοια: %d, Διαφορετικά: %d, Μοναδικά αριστερά: %d, Μοναδικά δεξιά: %d)"
 
 #: fsyncdirsdlg.rslefttorightcopy
-#, fuzzy,badformat
-#| msgid "Left to Right: Copy %d files, total size: %d bytes"
 msgid "Left to Right: Copy %d files, total size: %s (%s)"
-msgstr "Αριστερά προς Δεξιά: Αντιγραφή %d αρχεία, συνολικό μέγεθος: %d bytes"
+msgstr "Αριστερά προς Δεξιά: Αντιγραφή %d αρχεία, συνολικό μέγεθος: %s (%s)"
 
 #: fsyncdirsdlg.rsrighttoleftcopy
-#, fuzzy,badformat
-#| msgid "Right to Left: Copy %d files, total size: %d bytes"
 msgid "Right to Left: Copy %d files, total size: %s (%s)"
-msgstr "Δεξιά προς Αριστερά: Αντιγραφή %d αρχεία, συνολικό μέγεθος: %d bytes"
+msgstr "Δεξιά προς Αριστερά: Αντιγραφή %d αρχεία, συνολικό μέγεθος: %s (%s)"
 
 #: tfilesystemcopymoveoperationoptionsui.btnsearchtemplate.hint
 msgid "Choose template..."
@@ -57,7 +53,7 @@ msgstr "Έλεγχος ελεύθερου χώρου"
 
 #: tfilesystemcopymoveoperationoptionsui.cbcopyattributes.caption
 msgid "Cop&y attributes"
-msgstr "Αποθήκευση ιδιοτήτων"
+msgstr "Αντιγραφή ιδιοτήτων"
 
 #: tfilesystemcopymoveoperationoptionsui.cbcopyownership.caption
 msgid "Copy o&wnership"
@@ -114,7 +110,7 @@ msgstr "Όταν ο κατάλογος υπάρχει"
 #: tfilesystemcopymoveoperationoptionsui.lblfileexists.caption
 msgctxt "TFILESYSTEMCOPYMOVEOPERATIONOPTIONSUI.LBLFILEEXISTS.CAPTION"
 msgid "When &file exists"
-msgstr "Όταν το &αρχείο υπάρχει"
+msgstr "Όταν το αρχείο υπάρχει"
 
 #: tfilesystemcopymoveoperationoptionsui.lblsetpropertyerror.caption
 msgid "When ca&nnot set property"
@@ -602,7 +598,7 @@ msgstr "Άνοιγμα Δεξιά..."
 
 #: tfrmdiffer.actpaintbackground.caption
 msgid "Paint Background"
-msgstr "Σχεδιασμός Παρασκηνίου"
+msgstr "Χρώμα Παρασκηνίου"
 
 #: tfrmdiffer.actprevdifference.caption
 msgctxt "TFRMDIFFER.ACTPREVDIFFERENCE.CAPTION"
@@ -1099,6 +1095,10 @@ msgstr "Αναζήτηση για:"
 msgctxt "TFRMEDITSEARCHREPLACE.RGSEARCHDIRECTION.CAPTION"
 msgid "Direction"
 msgstr "Κατεύθυνση"
+
+#: tfrmelevation.chkelevateall.caption
+msgid "Do this for &all current objects"
+msgstr ""
 
 #: tfrmextractdlg.caption
 msgctxt "TFRMEXTRACTDLG.CAPTION"
@@ -1806,9 +1806,19 @@ msgctxt "TFRMFINDVIEW.CAPTION"
 msgid "Find"
 msgstr "Εύρεση"
 
+#: tfrmfindview.cbbackwards.caption
+msgid "&Backwards"
+msgstr "Ανάποδα"
+
 #: tfrmfindview.cbcasesens.caption
 msgid "C&ase sensitive"
 msgstr "Με Διάκριση Πεζών-Κεφαλαίων"
+
+#: tfrmfindview.cbregexp.caption
+#, fuzzy
+msgctxt "tfrmfindview.cbregexp.caption"
+msgid "&Regular expressions"
+msgstr "Συνήθεις Φράσεις"
 
 #: tfrmfindview.chkhex.caption
 msgctxt "tfrmfindview.chkhex.caption"
@@ -2260,7 +2270,7 @@ msgstr "Επίπεδη Προβολή"
 
 #: tfrmmain.actflatviewsel.caption
 msgid "&Flat view, only selected"
-msgstr ""
+msgstr "Επίπεδη προβολή, μόνο επιλεγμένων"
 
 #: tfrmmain.actfocuscmdline.caption
 msgid "Focus command line"
@@ -2300,11 +2310,11 @@ msgstr "Τοποθέτηση του κέρσορα στο τελευταίο α�
 
 #: tfrmmain.actgotonextentry.caption
 msgid "Place cursor on next folder or file"
-msgstr ""
+msgstr "Μετάθεση κέρσορα στον επόμενο φάκελο ή αρχείο"
 
 #: tfrmmain.actgotopreventry.caption
 msgid "Place cursor on previous folder or file"
-msgstr ""
+msgstr "Μετάθεση κέρσορα στον προηγούμενο φάκελο ή αρχείο"
 
 #: tfrmmain.acthardlink.caption
 msgctxt "TFRMMAIN.ACTHARDLINK.CAPTION"
@@ -5103,6 +5113,10 @@ msgstr "Αυτόματη Εσοχή"
 msgid "Allows to indent the caret, when new line is created with <Enter>, with the same amount of leading white space as the preceding line"
 msgstr "Επιτρέπει τη δημιουργία εσοχής καρέ, όταν νέα γραμμή δημιουργείται με το <Enter>, με την ίδια ποσότητα αρχικού λευκού διαστήματος σαν προηγούμενη γραμμή"
 
+#: tfrmoptionseditor.chkrightedge.caption
+msgid "Right margin:"
+msgstr "Δεξί περιθώριο:"
+
 #: tfrmoptionseditor.chkscrollpastendline.caption
 msgid "Caret past end of line"
 msgstr "Κέρσορας μετά το τέλος γραμμής"
@@ -5159,10 +5173,6 @@ msgstr "Παρακαλώ σημειώσατε οτι η ιδιότητα \"Smart
 #: tfrmoptionseditor.gbinternaleditor.caption
 msgid "Internal editor options"
 msgstr "Ιδιότητες Εσωτερικού επεξεργαστή"
-
-#: tfrmoptionseditor.chkrightedge.caption
-msgid "Right margin:"
-msgstr "Δεξί περιθώριο:"
 
 #: tfrmoptionseditor.lbltabwidth.caption
 msgid "Tab width:"
@@ -6697,7 +6707,7 @@ msgstr "Δημιουργία ενός αρχείου καταγραφής:"
 
 #: tfrmoptionslog.cblogfilecount.caption
 msgid "Maximum log file count"
-msgstr ""
+msgstr "Μέγιστος αριθμός αρχείου καταγραφής"
 
 #: tfrmoptionslog.cbloginfo.caption
 msgctxt "TFRMOPTIONSLOG.CBLOGINFO.CAPTION"
@@ -8460,11 +8470,11 @@ msgstr "OK"
 
 #: tfrmselectduplicates.caption
 msgid "Select duplicate files"
-msgstr ""
+msgstr "Επιλογή διπλότυπων αρχείων"
 
 #: tfrmselectduplicates.chkleaveunselected.caption
 msgid "&Leave at least one file in each group unselected:"
-msgstr ""
+msgstr "Αφήστε τουλάχιστον ένα αρχείο σε κάθε γκρουπ μη επιλεγμένο:"
 
 #: tfrmselectduplicates.cmbincludemask.text
 #, fuzzy
@@ -8474,19 +8484,19 @@ msgstr "*"
 
 #: tfrmselectduplicates.lblexcludemask.caption
 msgid "&Remove selection by name/extension:"
-msgstr ""
+msgstr "Αφαίρεση επιλογής καθ' 'ονομα/επέκταση:"
 
 #: tfrmselectduplicates.lblfirstmethod.caption
 msgid "&1."
-msgstr ""
+msgstr "1."
 
 #: tfrmselectduplicates.lblincludemask.caption
 msgid "Select by &name/extension:"
-msgstr ""
+msgstr "Επιλογή καθ' 'ονομα/επέκταση:"
 
 #: tfrmselectduplicates.lblsecondmethod.caption
 msgid "&2."
-msgstr ""
+msgstr "2."
 
 #: tfrmselectpathrange.buttonpanel.cancelbutton.caption
 msgctxt "tfrmselectpathrange.buttonpanel.cancelbutton.caption"
@@ -9541,7 +9551,7 @@ msgstr "Πλήρης Οθόνη"
 
 #: tfrmviewer.btngiftobmp.hint
 msgid "Export Frame"
-msgstr ""
+msgstr "Εξαγωγή Πλαισίου"
 
 #: tfrmviewer.btnhightlight.hint
 msgctxt "TFRMVIEWER.BTNHIGHTLIGHT.HINT"
@@ -9550,7 +9560,7 @@ msgstr "Υπογράμμιση"
 
 #: tfrmviewer.btnnextgifframe.hint
 msgid "Next Frame"
-msgstr ""
+msgstr "Επόμενο Πλαίσιο"
 
 #: tfrmviewer.btnpaint.hint
 msgctxt "TFRMVIEWER.BTNPAINT.HINT"
@@ -9565,7 +9575,7 @@ msgstr "1"
 
 #: tfrmviewer.btnprevgifframe.hint
 msgid "Previous Frame"
-msgstr ""
+msgstr "Προηγούμενο Πλαίσιο"
 
 #: tfrmviewer.btnredeye.hint
 msgid "Red Eyes"
@@ -9604,7 +9614,7 @@ msgstr "Επεξεργασία"
 
 #: tfrmviewer.miellipse.caption
 msgid "Ellipse"
-msgstr ""
+msgstr "Έλλειψη"
 
 #: tfrmviewer.miencoding.caption
 msgctxt "TFRMVIEWER.MIENCODING.CAPTION"
@@ -9628,7 +9638,7 @@ msgstr "Στυλό"
 
 #: tfrmviewer.mirect.caption
 msgid "Rect"
-msgstr ""
+msgstr "Ορθογώνιο"
 
 #: tfrmviewer.mirotate.caption
 msgctxt "TFRMVIEWER.MIROTATE.CAPTION"
@@ -9784,7 +9794,7 @@ msgstr "Παράμετροι:"
 
 #: ttfrmconfirmcommandline.lblestartpath.editlabel.caption
 msgid "Start path:"
-msgstr "Διαδρομή Εκκίνησης"
+msgstr "Διαδρομή Εκκίνησης:"
 
 #: twcxarchivecopyoperationoptionsui.lblfileexists.caption
 msgctxt "TWCXARCHIVECOPYOPERATIONOPTIONSUI.LBLFILEEXISTS.CAPTION"
@@ -9815,39 +9825,43 @@ msgstr "a;a;a;a;a;a;c;e;e;e;e;i;i;i;i;n;o;o;o;o;o;o;u;u;u;u;y;A;A;A;A;A;A;C;E;E;
 
 #: uadministrator.rselevationrequired
 msgid "You need to provide administrator permission"
+msgstr "Απαιτείται χορήγηση άδειας διαχειριστή"
+
+#: uadministrator.rselevationrequiredcopy
+msgid "to copy this object:"
 msgstr ""
 
 #: uadministrator.rselevationrequiredcreate
 msgid "to create this object:"
-msgstr ""
+msgstr "για τη δημιουργία αυτού του αντικειμένου:"
 
 #: uadministrator.rselevationrequireddelete
 msgid "to delete this object:"
-msgstr ""
+msgstr "για τη διαγραφή αυτού του αντικειμένου:"
 
 #: uadministrator.rselevationrequiredgetattributes
 msgid "to get attributes of this object:"
-msgstr ""
+msgstr "για λήψη ιδιοτήτων αυτού του αντικειμένου:"
 
 #: uadministrator.rselevationrequiredhardlink
 msgid "to create this hard link:"
-msgstr ""
+msgstr "για τη δημιουργία αυτού του σκληρού δεσμού:"
 
 #: uadministrator.rselevationrequiredopen
 msgid "to open this object:"
-msgstr ""
+msgstr "για το άνοιγμα αυτού του αντικειμένου:"
 
 #: uadministrator.rselevationrequiredrename
 msgid "to rename this object:"
-msgstr ""
+msgstr "για τη μετονομασία αυτού του αντικειμένου:"
 
 #: uadministrator.rselevationrequiredsetattributes
 msgid "to set attributes of this object:"
-msgstr ""
+msgstr "για το καθορισμό ιδιοτήτων αυτού του αντικειμένου:"
 
 #: uadministrator.rselevationrequiredsymlink
 msgid "to create this symbolic link:"
-msgstr ""
+msgstr "για τη δημιουργία αυτού του συμβολοδεσμού:"
 
 #: uexifreader.rsdatetimeoriginal
 msgid "Date taken"
@@ -10119,7 +10133,7 @@ msgstr "Αυτόματη ονομασία πηγαίων αρχείων"
 
 #: ulng.rsdlgbuttonautorenametarget
 msgid "A&uto-rename target files"
-msgstr ""
+msgstr "Αυτόματη μετονομασία στοχευμένων αρχείων"
 
 #: ulng.rsdlgbuttoncancel
 msgctxt "ulng.rsdlgbuttoncancel"
@@ -10406,6 +10420,10 @@ msgstr "Αρχεία βιβλιοθηκών"
 #: ulng.rsfilterpluginfiles
 msgid "Plugin files"
 msgstr "Αρχεία προσθέτων"
+
+#: ulng.rsfilterprogramslibraries
+msgid "Programs and Libraries"
+msgstr ""
 
 #: ulng.rsfilterstatus
 msgid "FILTER"
@@ -10888,7 +10906,7 @@ msgstr "Δεν μπορείτε να αντιγράψετε/μετακινήσε
 
 #: ulng.rsmsgcannotcopyspecialfile
 msgid "Cannot copy special file %s"
-msgstr ""
+msgstr "Αδυναμία αντιγραφής ειδικού αρχείου %s"
 
 #: ulng.rsmsgcannotdeletedirectory
 msgid "Cannot delete directory %s"
@@ -11006,9 +11024,13 @@ msgstr "Αδυναμία σύνδεσης στον διακομιστή: \"%s\""
 msgid "Cannot copy file %s to %s"
 msgstr "Αδυναμία αντιγραφής αρχείου %s στο %s"
 
+#: ulng.rsmsgerrcannotmovedirectory
+msgid "Cannot move directory %s"
+msgstr ""
+
 #: ulng.rsmsgerrcannotmovefile
 msgid "Cannot move file %s"
-msgstr ""
+msgstr "Αδυναμία μετακίνησης ειδικού αρχείου %s"
 
 #: ulng.rsmsgerrcreatefiledirectoryexists
 msgid "There already exists a directory named \"%s\"."
@@ -11109,6 +11131,10 @@ msgstr "Αδυναμία ορισμού ιδιοκτήτη/γκρουπ για \
 #: ulng.rsmsgerrsetpermissions
 msgid "Can not set permissions for \"%s\""
 msgstr "Αδυναμία ορισμού αδειών για \"%s\""
+
+#: ulng.rsmsgerrsetxattribute
+msgid "Can not set extended attributes for \"%s\""
+msgstr "Αδυναμία καθορισμού εκτεταμένων ιδιοτήτων για %s"
 
 #: ulng.rsmsgerrsmallbuf
 msgid "Buffer too small"
@@ -13046,6 +13072,10 @@ msgctxt "ulng.rsoptpluginsregisteredfor"
 msgid "Registered for"
 msgstr "Έχει καταχωρηθεί σε"
 
+#: ulng.rsoptpluginsselectlualibrary
+msgid "Select Lua library file"
+msgstr ""
+
 #: ulng.rsoptrenamingtooltipfiletype
 msgid "Renaming tooltip file type"
 msgstr "Τύπος Αρχείου Μετονομασίας Υπόδειξης"
@@ -13290,7 +13320,7 @@ msgstr "Επιλέξτε ένα κατάλογο"
 
 #: ulng.rsselectduplicatemethod
 msgid "Newest;Oldest;Largest;Smallest;First in group;Last in group"
-msgstr ""
+msgstr "Νεώτερο;Παλαιότερο;Μεγαλύτερο;Μικρότερο;Πρώτο στο γκρουπ;Τελευταίο στο γκρουπ"
 
 #: ulng.rsselectyoufindfileswindow
 msgid "Select your window"

@@ -125,7 +125,7 @@ uses
   ExtDlgs, LCLProc, Menus, Graphics, InterfaceBase, WSForms, LMessages, LCLIntf,
   uConnectionManager
   {$IF DEFINED(MSWINDOWS)}
-  , ComObj, fMain, DCOSUtils, uOSUtils, uFileSystemFileSource
+  , LCLStrConsts, ComObj, fMain, DCOSUtils, uOSUtils, uFileSystemFileSource
   , uTotalCommander, FileUtil, Windows, ShlObj, uShlObjAdditional
   , uWinNetFileSource, uVfsModule, uLng, uMyWindows, DCStrUtils
   , uDCReadSVG, uFileSourceUtil, uGdiPlusJPEG, uListGetPreviewBitmap
@@ -138,7 +138,7 @@ uses
   , BaseUnix, fFileProperties, uJpegThumb
     {$IF NOT DEFINED(DARWIN)}
     , uDCReadSVG, uMagickWand, uGio, uGioFileSource, uVfsModule, uVideoThumb
-    , uDCReadWebP, uFolderThumb
+    , uDCReadWebP, uFolderThumb, uAudioThumb
     {$ELSE}
     , MacOSAll, fMain, uQuickLook, uMyDarwin, uShowMsg, uLng
     {$ENDIF}
@@ -811,8 +811,8 @@ var
 begin
   opdDialog := nil;
 {$IFDEF MSWINDOWS}
-  sFilter := GraphicFilter(TGraphic)+'|'+ 'Programs and Libraries (*.exe;*.dll)|*.exe;*.dll'+'|'+
-             Format('All files (%s)|%s',[GetAllFilesMask, GetAllFilesMask]);
+  sFilter := GraphicFilter(TGraphic) + '|' + rsFilterProgramsLibraries + ' (*.exe;*.dll)|*.exe;*.dll' + '|' +
+             Format(rsAllFiles, [GetAllFilesMask, GetAllFilesMask, '']);
   bAlreadyOpen := False;
 
   iPos :=Pos(',', sFileName);

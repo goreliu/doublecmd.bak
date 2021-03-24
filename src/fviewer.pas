@@ -2389,14 +2389,19 @@ begin
                                        (TRegExprU.Available and (ViewerControl.Encoding in [veUtf8, veUtf8bom]))
                                      );
       if not FFindDialog.cbRegExp.Visible then FFindDialog.cbRegExp.Checked:= False;
+      if FFindDialog.cbRegExp.Checked then bSearchBackwards:= False;
+      FFindDialog.cbBackwards.Checked:= bSearchBackwards;
       // Load search history
       FFindDialog.cbDataToFind.Items.Assign(glsSearchHistory);
       sSearchTextU:= ViewerControl.Selection;
       if Length(sSearchTextU) > 0 then
         FFindDialog.cbDataToFind.Text:= sSearchTextU;
+
       if FFindDialog.ShowModal <> mrOK then Exit;
+
       if FFindDialog.cbDataToFind.Text = '' then Exit;
       sSearchTextU:= FFindDialog.cbDataToFind.Text;
+      bSearchBackwards:= FFindDialog.cbBackwards.Checked;
       // Save search history
       glsSearchHistory.Assign(FFindDialog.cbDataToFind.Items);
       gFirstTextSearch:= False;
@@ -2411,6 +2416,7 @@ begin
       end;
       if glsSearchHistory.Count > 0 then
         sSearchTextU:= glsSearchHistory[0];
+      FFindDialog.cbBackwards.Checked:= bSearchBackwards;
     end;
 
   if FFindDialog.cbRegExp.Checked then
@@ -2988,8 +2994,18 @@ begin
 end;
 
 procedure TfrmViewer.cm_Find(const Params: array of string);
+var
+  bSearchBackwards: Boolean;
 begin
-  if not miGraphics.Checked then DoSearch(False, False);
+  if not miGraphics.Checked then
+  begin
+    if (FFindDialog = nil) then
+      bSearchBackwards:= False
+    else begin
+      bSearchBackwards:= FFindDialog.cbBackwards.Checked;
+    end;
+    DoSearch(False, bSearchBackwards);
+  end;
 end;
 
 procedure TfrmViewer.cm_FindNext(const Params: array of string);

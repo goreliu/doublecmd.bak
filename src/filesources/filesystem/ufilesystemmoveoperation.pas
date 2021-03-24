@@ -39,6 +39,7 @@ type
     procedure SetSearchTemplate(AValue: TSearchTemplate);
 
   protected
+    function Recursive: Boolean;
 
   public
     constructor Create(aFileSource: IFileSource;
@@ -115,6 +116,7 @@ begin
                         @AskQuestion,
                         @CheckOperationState);
   try
+    TreeBuilder.Recursive := Recursive;
     // In move operation don't follow symlinks.
     TreeBuilder.SymLinkOption := fsooslDontFollow;
     TreeBuilder.SearchTemplate := Self.SearchTemplate;
@@ -165,6 +167,24 @@ procedure TFileSystemMoveOperation.SetSearchTemplate(AValue: TSearchTemplate);
 begin
   FSearchTemplate.Free;
   FSearchTemplate := AValue;
+end;
+
+function TFileSystemMoveOperation.Recursive: Boolean;
+begin
+  // First check that both paths on the same volume
+  if not mbFileSameVolume(ExcludeTrailingBackslash(SourceFiles.Path),
+                          ExcludeTrailingBackslash(TargetPath)) then
+  begin
+    Exit(True);
+  end;
+
+  if ((RenameMask <> '*.*') and (RenameMask <> '')) or
+     (FCorrectSymlinks) or Assigned(FSearchTemplate) then
+  begin
+    Exit(True);
+  end;
+
+  Result:= False;
 end;
 
 procedure TFileSystemMoveOperation.Finalize;

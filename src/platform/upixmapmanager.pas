@@ -1786,7 +1786,7 @@ begin
   {$ENDIF}
   end
   else
-  {$IFDEF LCLWIN32}
+  {$IFDEF MSWINDOWS}
   if iIndex >= SystemIconIndexStart then
     try
       if ImageList_GetIconSize(FSysImgList, @cx, @cy) then
@@ -1794,6 +1794,7 @@ begin
       else
         TrySetSize(gIconsSize, gIconsSize);
 
+      {$IF DEFINED(LCLWIN32)}
       if (cx = Width) and (cy = Height) then
         ImageList_Draw(FSysImgList, iIndex - SystemIconIndexStart, Canvas.Handle, X, Y, ILD_TRANSPARENT)
       else
@@ -1808,6 +1809,17 @@ begin
           DestroyIcon(hicn);
         end;
       end;
+      {$ELSEIF DEFINED(LCLQT5)}
+      hicn:= ImageList_GetIcon(FSysImgList, iIndex - SystemIconIndexStart, ILD_NORMAL);
+      try
+        Bitmap:= BitmapCreateFromHICON(hicn);
+        aRect := Classes.Bounds(X, Y, Width, Height);
+        Canvas.StretchDraw(aRect, Bitmap);
+      finally
+        FreeAndNil(Bitmap);
+        DestroyIcon(hicn);
+      end
+      {$ENDIF}
     except
       Result:= False;
     end;
@@ -1916,20 +1928,16 @@ begin
       {$ELSEIF DEFINED(UNIX) AND NOT DEFINED(DARWIN)}
       if (IconsMode = sim_all_and_exe) and (DirectAccess) then
       begin
+        if not LoadIcon then Exit(-1);
+
         if mbFileAccess(Path + Name + '/.directory', fmOpenRead) then
         begin
-          if LoadIcon then
-            Result := GetIconByDesktopFile(Path + Name + '/.directory', FiDirIconID)
-          else
-            Result := -1;
+          Result := GetIconByDesktopFile(Path + Name + '/.directory', FiDirIconID);
           Exit;
         end
         else if (FHomeFolder = Path) then
         begin
-          if LoadIcon then
-            Result := CheckAddThemePixmap(GioFileGetIcon(FullPath))
-          else
-            Result := -1;
+          Result := CheckAddThemePixmap(GioFileGetIcon(FullPath));
           Exit;
         end
         else Exit(FiDirIconID);

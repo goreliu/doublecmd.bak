@@ -3,7 +3,7 @@
     -------------------------------------------------------------------------
     This unit contains platform dependent functions dealing with operating system.
 
-    Copyright (C) 2006-2020 Alexander Koblov (alexx2000@mail.ru)
+    Copyright (C) 2006-2021 Alexander Koblov (alexx2000@mail.ru)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ uses
   , BaseUnix, DCUnix
 {$ENDIF}
 {$IFDEF MSWINDOWS}
-  , Windows
+  , JwaWinBase, Windows
 {$ENDIF}
   ;
 
@@ -83,6 +83,7 @@ type
                            caoCopyTime,
                            caoCopyOwnership,
                            caoCopyPermissions,
+                           caoCopyXattributes,
                            caoRemoveReadOnlyAttr);
   TCopyAttributesOptions = set of TCopyAttributesOption;
   TCopyAttributesResult = array[TCopyAttributesOption] of Integer;
@@ -223,6 +224,7 @@ function mbRemoveDir(const Dir: String): Boolean;
 function mbFileSystemEntryExists(const Path: String): Boolean;
 function mbCompareFileNames(const FileName1, FileName2: String): Boolean;
 function mbFileSame(const FileName1, FileName2: String): Boolean;
+function mbFileSameVolume(const FileName1, FileName2: String) : Boolean;
 { Other functions }
 function mbGetEnvironmentString(Index : Integer) : String;
 {en
@@ -487,6 +489,15 @@ begin
     end;
   end;
 
+  if caoCopyXattributes in Options then
+  begin
+    if not mbFileCopyXattr(sSrc, sDst) then
+    begin
+      Include(Result, caoCopyXattributes);
+      if Assigned(Errors) then Errors^[caoCopyXattributes]:= GetLastOSError;
+    end;
+  end;
+
   if caoCopyTime in Options then
   begin
     if not (mbFileGetTime(sSrc, ModificationTime, CreationTime, LastAccessTime) and
@@ -569,6 +580,17 @@ begin
           if Assigned(Errors) then Errors^[caoCopyAttributes]:= GetLastOSError;
         end;
       end;
+
+{$IFDEF LINUX}
+      if caoCopyXattributes in Options then
+      begin
+        if not mbFileCopyXattr(sSrc, sDst) then
+        begin
+          Include(Result, caoCopyXattributes);
+          if Assigned(Errors) then Errors^[caoCopyXattributes]:= GetLastOSError;
+        end;
+      end;
+{$ENDIF}
     end;
   end;
 end;
@@ -1436,6 +1458,26 @@ begin
               (File1Stat.st_ino = File2Stat.st_ino) and
               (File1Stat.st_dev = File2Stat.st_dev)
             );
+end;
+{$ENDIF}
+
+function mbFileSameVolume(const FileName1, FileName2: String): Boolean;
+{$IF DEFINED(MSWINDOWS)}
+var
+  lpszVolumePathName1: array[0..maxSmallint] of WideChar;
+  lpszVolumePathName2: array[0..maxSmallint] of WideChar;
+begin
+  Result:= GetVolumePathNameW(PWideChar(UTF16LongName(FileName1)), PWideChar(lpszVolumePathName1), maxSmallint) and
+           GetVolumePathNameW(PWideChar(UTF16LongName(FileName2)), PWideChar(lpszVolumePathName2), maxSmallint) and
+           WideSameText(ExtractFileDrive(lpszVolumePathName1), ExtractFileDrive(lpszVolumePathName2));
+end;
+{$ELSE}
+var
+  Stat1, Stat2: Stat;
+begin
+  Result:= (fpLStat(UTF8ToSys(FileName1), Stat1) = 0) and
+           (fpLStat(UTF8ToSys(FileName2), Stat2) = 0) and
+           (Stat1.st_dev = Stat2.st_dev);
 end;
 {$ENDIF}
 

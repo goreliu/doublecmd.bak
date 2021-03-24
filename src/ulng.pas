@@ -32,6 +32,7 @@ resourcestring
   rsMsgCannotDeleteDirectory = 'Cannot delete directory %s';
   rsMsgCannotOverwriteDirectory = 'Cannot overwrite directory "%s" with non-directory "%s"';
   rsMsgCannotCopySpecialFile = 'Cannot copy special file %s';
+  rsMsgErrCannotMoveDirectory = 'Cannot move directory %s';
   rsMsgErrDirExists = 'Directory %s exists!';
   rsMsgErrRename = 'Cannot rename file %s to %s';
   rsMsgErrCannotMoveFile = 'Cannot move file %s';
@@ -114,6 +115,7 @@ resourcestring
   rsFilterArchiverConfigFiles = 'Archiver config files';
   rsFilterPluginFiles = 'Plugin files';
   rsFilterLibraries = 'Library files';
+  rsFilterProgramsLibraries = 'Programs and Libraries';
 
   // Archiver section.
   rsMsgArchiverCustomParams = 'Additional parameters for archiver command-line:';
@@ -199,6 +201,7 @@ resourcestring
   rsMsgErrSetDateTime = 'Can not set date/time for "%s"';
   rsMsgErrSetOwnership = 'Can not set owner/group for "%s"';
   rsMsgErrSetPermissions = 'Can not set permissions for "%s"';
+  rsMsgErrSetXattribute = 'Can not set extended attributes for "%s"';
   rsMsgErrDateNotSupported = 'Date %s is not supported';
   rsMsgErrSaveFile = 'Cannot save file';
   rsMsgErrCanNotConnect = 'Can not connect to server: "%s"';
@@ -876,6 +879,7 @@ resourcestring
   rsOptPluginDisable = 'D&isable';
   rsOptPluginShowByPlugin = 'By Plugin';
   rsOptPluginShowByExtension = 'By extension';
+  rsOptPluginsSelectLuaLibrary = 'Select Lua library file';
   rsOptPluginSortOnlyWhenByExtension = 'Sorting WCX plugins is only possible when showing plugins by extension!';
   rsPluginFilenameStyleList = 'With complete absolute path;Path relative to %COMMANDER_PATH%;Relative to the following';  
   //-------------------------------

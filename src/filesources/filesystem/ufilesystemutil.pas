@@ -284,17 +284,25 @@ function FileCopyProgress(TotalBytes, DoneBytes: Int64; UserData: Pointer): Long
 var
   Helper: TFileSystemOperationHelper absolute UserData;
 begin
-  if (DoneBytes > 0) then
-    Helper.FStatistics.DoneBytes+= (DoneBytes - Helper.FStatistics.CurrentFileDoneBytes);
+  with Helper do
+  begin
+    FStatistics.DoneBytes+= (DoneBytes - FStatistics.CurrentFileDoneBytes);
 
-  //Helper.FStatistics.CurrentFileTotalBytes:= TotalBytes;
-  Helper.FStatistics.CurrentFileDoneBytes:= DoneBytes;
-  Helper.UpdateStatistics(Helper.FStatistics);
-  try
-    Helper.CheckOperationState;
-  except
-    on E: EFileSourceOperationAborting do
-      Exit(False);
+    // File has alternate data streams
+    if TotalBytes > FStatistics.CurrentFileTotalBytes then
+    begin
+      FStatistics.TotalBytes+= (TotalBytes - FStatistics.CurrentFileTotalBytes);
+      FStatistics.CurrentFileTotalBytes:= TotalBytes;
+    end;
+
+    FStatistics.CurrentFileDoneBytes:= DoneBytes;
+    UpdateStatistics(FStatistics);
+    try
+      CheckOperationState;
+    except
+      on E: EFileSourceOperationAborting do
+        Exit(False);
+    end;
   end;
   Result:= True;
 end;
@@ -317,7 +325,7 @@ begin
       // Add link to current node.
       AddedIndex := CurrentNode.AddSubNode(aFile);
       AddedNode := CurrentNode.SubNodes[AddedIndex];
-      AddedNode.Data := TFileTreeNodeData.Create;
+      AddedNode.Data := TFileTreeNodeData.Create(FRecursive);
       (CurrentNode.Data as TFileTreeNodeData).SubnodesHaveLinks := True;
 
       // Then add linked file/directory as a subnode of the link.
@@ -667,6 +675,11 @@ begin
     begin
       Result:= CompareFiles(SourceFile.FullPath, TargetFileName, SourceFile.Size);
     end;
+    if Result and (FCopyAttributesOptions <> []) then
+    begin
+      FCopyAttributesOptions := FCopyAttributesOptions * [caoCopyXattributes, caoCopyPermissions];
+      CopyProperties(SourceFile, TargetFileName);
+    end;
     Exit;
   end;
 
@@ -716,6 +729,7 @@ begin
                 else if BytesWritten < BytesRead then
                 begin
                   bRetryWrite := True;   // repeat and try to write the rest
+                  Dec(BytesRead, BytesWrittenTry);
                 end;
               except
                 on E: EWriteError do
@@ -877,13 +891,15 @@ begin
         fsoospeNone:
           begin
             if caoCopyAttributes in CopyAttrResult then
-              AddStrWithSep(Msg, Format(rsMsgErrSetAttribute, [SourceFile.FullPath]), LineEnding);
+              AddStrWithSep(Msg, Format(rsMsgErrSetAttribute, [TargetFileName]), LineEnding);
             if caoCopyTime in CopyAttrResult then
-              AddStrWithSep(Msg, Format(rsMsgErrSetDateTime, [SourceFile.FullPath]), LineEnding);
+              AddStrWithSep(Msg, Format(rsMsgErrSetDateTime, [TargetFileName]), LineEnding);
             if caoCopyOwnership in CopyAttrResult then
-              AddStrWithSep(Msg, Format(rsMsgErrSetOwnership, [SourceFile.FullPath]), LineEnding);
+              AddStrWithSep(Msg, Format(rsMsgErrSetOwnership, [TargetFileName]), LineEnding);
             if caoCopyPermissions in CopyAttrResult then
-              AddStrWithSep(Msg, Format(rsMsgErrSetPermissions, [SourceFile.FullPath]), LineEnding);
+              AddStrWithSep(Msg, Format(rsMsgErrSetPermissions, [TargetFileName]), LineEnding);
+            if caoCopyXattributes in CopyAttrResult then
+              AddStrWithSep(Msg, Format(rsMsgErrSetXattribute, [TargetFileName]), LineEnding);
 
             case AskQuestion(Msg, '',
                              [fsourSkip, fsourSkipAll, fsourIgnoreAll, fsourAbort],
@@ -1096,7 +1112,7 @@ begin
           Result := True;
           bRemoveDirectory := False;
         end
-        else
+        else if NodeData.Recursive then
         begin
           // Create target directory.
           if CreateDirectoryUAC(AbsoluteTargetFileName) then
@@ -1109,15 +1125,34 @@ begin
           else
           begin
             // Error - all files inside not copied/moved.
-            ShowError(rsMsgLogError + Format(rsMsgErrForceDir, [AbsoluteTargetFileName]));
+            ShowError(rsMsgLogError + Format(rsMsgErrForceDir, [AbsoluteTargetFileName]) + LineEnding + LineEnding + mbSysErrorMessage);
             Result := False;
             CountStatistics(aNode);
           end;
+        end
+        else begin
+          ShowError(rsMsgLogError + Format(rsMsgErrCannotMoveDirectory, [aNode.TheFile.FullPath]) + LineEnding + LineEnding + mbSysErrorMessage);
+          Result := False;
+          CountStatistics(aNode);
         end;
       end;
 
     fsoterAddToTarget:
       begin
+        if (FMode = fsohmMove) and (not NodeData.Recursive) then
+        begin
+          with TFileSystemTreeBuilder.Create(AskQuestion, CheckOperationState) do
+          try
+            // In move operation don't follow symlinks.
+            SymLinkOption := fsooslDontFollow;
+
+            BuildFromNode(aNode);
+            FStatistics.TotalFiles += FilesCount;
+            FStatistics.TotalBytes += FilesSize;
+          finally
+            Free;
+          end;
+        end;
         // Don't create existing directory, but copy files into it.
         Result := ProcessNode(aNode, IncludeTrailingPathDelimiter(AbsoluteTargetFileName));
       end;
@@ -1880,6 +1915,9 @@ begin
     except
       on E: Exception do
       begin
+        if E is EFileSourceOperationAborting then
+          raise;
+
         case AskQuestion(rsMsgVerify, E.Message,
                          [fsourSkip, fsourAbort],
                          fsourAbort, fsourSkip) of

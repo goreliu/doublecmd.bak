@@ -1044,6 +1044,7 @@ msgid "S&earch from caret"
 msgstr "Zoek vanaf dakje ^"
 
 #: tfrmeditsearchreplace.cbsearchregexp.caption
+msgctxt "tfrmeditsearchreplace.cbsearchregexp.caption"
 msgid "&Regular expressions"
 msgstr "&Reguliere uitdrukkingen"
 
@@ -1070,6 +1071,10 @@ msgstr "&Zoek naar:"
 #: tfrmeditsearchreplace.rgsearchdirection.caption
 msgid "Direction"
 msgstr "Richting"
+
+#: tfrmelevation.chkelevateall.caption
+msgid "Do this for &all current objects"
+msgstr ""
 
 #: tfrmextractdlg.caption
 msgid "Unpack files"
@@ -1767,9 +1772,19 @@ msgctxt "TFRMFINDVIEW.CAPTION"
 msgid "Find"
 msgstr "Zoeken"
 
+#: tfrmfindview.cbbackwards.caption
+msgid "&Backwards"
+msgstr ""
+
 #: tfrmfindview.cbcasesens.caption
 msgid "C&ase sensitive"
 msgstr "Hoofdlettergevoelig"
+
+#: tfrmfindview.cbregexp.caption
+#, fuzzy
+msgctxt "tfrmfindview.cbregexp.caption"
+msgid "&Regular expressions"
+msgstr "&Reguliere uitdrukkingen"
 
 #: tfrmfindview.chkhex.caption
 msgctxt "tfrmfindview.chkhex.caption"
@@ -4497,7 +4512,6 @@ msgid "Background 2:"
 msgstr "Achtergrond 2:"
 
 #: tfrmoptionscustomcolumns.lblconfigcolumns.caption
-#| msgid "Con&figure columns view:"
 msgid "&Columns view:"
 msgstr "Kolomweergave:"
 
@@ -5013,6 +5027,10 @@ msgstr "Automatisch inspringen"
 msgid "Allows to indent the caret, when new line is created with <Enter>, with the same amount of leading white space as the preceding line"
 msgstr ""
 
+#: tfrmoptionseditor.chkrightedge.caption
+msgid "Right margin:"
+msgstr "Rechterkantlijn:"
+
 #: tfrmoptionseditor.chkscrollpastendline.caption
 msgid "Caret past end of line"
 msgstr "Dakje voorbij einde van regel"
@@ -5069,10 +5087,6 @@ msgstr ""
 #: tfrmoptionseditor.gbinternaleditor.caption
 msgid "Internal editor options"
 msgstr "Opties voor interne bewerker"
-
-#: tfrmoptionseditor.chkrightedge.caption
-msgid "Right margin:"
-msgstr "Rechterkantlijn:"
 
 #: tfrmoptionseditor.lbltabwidth.caption
 msgid "Tab width:"
@@ -5521,12 +5535,10 @@ msgid "Name of the action. It is never passed to the system, it's just a mnemoni
 msgstr "Naam van de actie. Niet voor het systeem, alleen voor u"
 
 #: tfrmoptionsfileassoc.edtparams.hint
-#| msgid "Parameter to pass to the command. Long filename with spaces should be quoted."
 msgid "Parameter to pass to the command. Long filename with spaces should be quoted (manually entering)."
 msgstr "Parameter om mee te geven aan de opdracht. Let op juiste omgang met spaties in bestandnamen."
 
 #: tfrmoptionsfileassoc.fnecommand.hint
-#| msgid "Command to execute. Long filename with space should be quoted."
 msgid "Command to execute. Never quote this string."
 msgstr "Opdracht om uit te voeren. Gebruik geen aanhalingstekens."
 
@@ -6606,7 +6618,6 @@ msgid "&Remove thumbnails for no longer existing files"
 msgstr "Verwijder miniaturen van niet langer bestaande bestanden"
 
 #: tfrmoptionsmisc.btnviewconfigfile.hint
-#| msgid "View log file content"
 msgctxt "TFRMOPTIONSMISC.BTNVIEWCONFIGFILE.HINT"
 msgid "View configuration file content"
 msgstr "Toon inhoud van instellingenbestand"
@@ -8610,7 +8621,6 @@ msgid "Size and number of parts"
 msgstr "Grootte en aantal van onderdelen"
 
 #: tfrmsplitter.lbdirtarget.caption
-#| msgid "Directory &target"
 msgid "Split the file to directory:"
 msgstr "Splits het bestand naar map:"
 
@@ -8779,7 +8789,6 @@ msgid "Synchronize directories"
 msgstr "Synchroniseer mappen"
 
 #: tfrmsyncdirsdlg.cbextfilter.text
-#| msgid "*.*"
 msgctxt "TFRMSYNCDIRSDLG.CBEXTFILTER.TEXT"
 msgid "*"
 msgstr "*"
@@ -9619,6 +9628,10 @@ msgstr ""
 msgid "You need to provide administrator permission"
 msgstr ""
 
+#: uadministrator.rselevationrequiredcopy
+msgid "to copy this object:"
+msgstr ""
+
 #: uadministrator.rselevationrequiredcreate
 msgid "to create this object:"
 msgstr ""
@@ -10198,6 +10211,10 @@ msgstr ""
 
 #: ulng.rsfilterpluginfiles
 msgid "Plugin files"
+msgstr ""
+
+#: ulng.rsfilterprogramslibraries
+msgid "Programs and Libraries"
 msgstr ""
 
 #: ulng.rsfilterstatus
@@ -10796,6 +10813,10 @@ msgstr "Kan niet verbinden met server: '%s'"
 msgid "Cannot copy file %s to %s"
 msgstr "Kan bestand %s niet kopiëren naar %s"
 
+#: ulng.rsmsgerrcannotmovedirectory
+msgid "Cannot move directory %s"
+msgstr ""
+
 #: ulng.rsmsgerrcannotmovefile
 msgid "Cannot move file %s"
 msgstr ""
@@ -10899,6 +10920,10 @@ msgstr "Kan eigenaar/groep voor '%s' niet instellen"
 #: ulng.rsmsgerrsetpermissions
 msgid "Can not set permissions for \"%s\""
 msgstr "Kan rechten voor '%s'niet instellen"
+
+#: ulng.rsmsgerrsetxattribute
+msgid "Can not set extended attributes for \"%s\""
+msgstr ""
 
 #: ulng.rsmsgerrsmallbuf
 msgid "Buffer too small"
@@ -12812,6 +12837,10 @@ msgstr ""
 msgctxt "ulng.rsoptpluginsregisteredfor"
 msgid "Registered for"
 msgstr "Geregistreerd voor"
+
+#: ulng.rsoptpluginsselectlualibrary
+msgid "Select Lua library file"
+msgstr ""
 
 #: ulng.rsoptrenamingtooltipfiletype
 msgid "Renaming tooltip file type"
